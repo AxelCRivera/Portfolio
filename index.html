@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Axel Castorena Rivera</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Outfit:wght@300;400;600&family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0d0f;
+    --surface: #131316;
+    --surface2: #1a1a1f;
+    --border: #2a2a32;
+    --accent: #c8f542;
+    --accent2: #7c6af7;
+    --text: #e8e8ec;
+    --muted: #6b6b7a;
+    --mono: 'Share Tech Mono', monospace;
+    --sans: 'Outfit', sans-serif;
+    --display: 'Space Grotesk', sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-weight: 300;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* SCANLINE OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.03) 2px, rgba(0,0,0,0.03) 4px);
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2rem 3rem;
+    background: rgba(13,13,15,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    color: var(--accent);
+    letter-spacing: 0.08em;
+  }
+
+  .lang-toggle {
+    display: flex;
+    gap: 0.3rem;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 0.25rem;
+  }
+
+  .lang-btn {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    padding: 0.3rem 0.7rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    background: transparent;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    transition: all 0.2s;
+  }
+
+  .lang-btn.active {
+    background: var(--accent);
+    color: #0d0d0f;
+    font-weight: 600;
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 8rem 3rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-grid-bg {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--border) 1px, transparent 1px),
+      linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 50%, black 30%, transparent 100%);
+    opacity: 0.3;
+  }
+
+  .hero-eyebrow {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--accent);
+    letter-spacing: 0.2em;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.2s forwards;
+  }
+
+  .hero-name {
+    font-family: var(--display);
+    font-size: clamp(3rem, 8vw, 7rem);
+    font-weight: 700;
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.4s forwards;
+  }
+
+  .hero-name span {
+    color: var(--accent);
+  }
+
+  .hero-title {
+    font-family: var(--display);
+    font-size: clamp(1rem, 2.5vw, 1.4rem);
+    font-weight: 300;
+    color: var(--muted);
+    margin-bottom: 2.5rem;
+    max-width: 600px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.6s forwards;
+  }
+
+  .hero-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.8s forwards;
+  }
+
+  .tag {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    padding: 0.35rem 0.8rem;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    transition: all 0.2s;
+  }
+
+  .tag:hover { border-color: var(--accent); color: var(--accent); }
+  .tag.highlight { border-color: var(--accent2); color: var(--accent2); }
+
+  /* GLYPH DECORATION */
+  .hero-glyph {
+    position: absolute;
+    right: 5%;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: var(--mono);
+    font-size: clamp(8rem, 18vw, 18rem);
+    color: var(--surface2);
+    letter-spacing: -0.1em;
+    pointer-events: none;
+    user-select: none;
+    line-height: 1;
+    opacity: 0;
+    animation: fadeIn 1.2s 1s forwards;
+  }
+
+  /* SECTIONS */
+  section {
+    padding: 6rem 3rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--accent);
+    letter-spacing: 0.25em;
+    margin-bottom: 0.8rem;
+  }
+
+  .section-title {
+    font-family: var(--display);
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin-bottom: 3rem;
+    line-height: 1.1;
+  }
+
+  .divider {
+    width: 100%;
+    height: 1px;
+    background: var(--border);
+    margin: 0;
+  }
+
+  /* EXPERIENCE */
+  .exp-item {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 2rem;
+    padding: 2.5rem 0;
+    border-bottom: 1px solid var(--border);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s, transform 0.6s;
+  }
+
+  .exp-item.visible { opacity: 1; transform: none; }
+
+  .exp-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .exp-date {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+  }
+
+  .exp-company {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 1rem;
+  }
+
+  .exp-location {
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+
+  .exp-role {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--accent2);
+    letter-spacing: 0.05em;
+    margin-bottom: 1rem;
+  }
+
+  .exp-tasks {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .exp-tasks li {
+    font-size: 0.88rem;
+    color: var(--muted);
+    padding-left: 1.2rem;
+    position: relative;
+  }
+
+  .exp-tasks li::before {
+    content: '›';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+  }
+
+  /* SKILLS GRID */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.2rem;
+  }
+
+  .skill-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.5rem;
+    transition: border-color 0.2s, transform 0.2s;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.5s, transform 0.5s, border-color 0.2s;
+  }
+
+  .skill-card.visible { opacity: 1; transform: none; }
+  .skill-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+
+  .skill-card-label {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    color: var(--accent);
+    letter-spacing: 0.2em;
+    margin-bottom: 0.8rem;
+  }
+
+  .skill-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .skill-pill {
+    font-size: 0.78rem;
+    padding: 0.2rem 0.6rem;
+    border-radius: 3px;
+    background: var(--surface2);
+    color: var(--text);
+  }
+
+  .skill-pill.dim { color: var(--muted); }
+
+  /* EDUCATION */
+  .edu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.2rem;
+  }
+
+  .edu-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.8rem;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.5s, transform 0.5s;
+  }
+
+  .edu-card.visible { opacity: 1; transform: none; }
+
+  .edu-inst {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 1rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .edu-degree {
+    font-size: 0.83rem;
+    color: var(--muted);
+    margin-bottom: 0.8rem;
+    line-height: 1.4;
+  }
+
+  .edu-period {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+  }
+
+  /* COURSES & ACHIEVEMENTS */
+  .list-items {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  .list-item {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    padding: 1rem 1.2rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 0.88rem;
+    opacity: 0;
+    transform: translateX(-12px);
+    transition: opacity 0.5s, transform 0.5s;
+  }
+
+  .list-item.visible { opacity: 1; transform: none; }
+  .list-item:hover { border-color: var(--border); }
+
+  .list-item-icon {
+    font-family: var(--mono);
+    color: var(--accent);
+    font-size: 0.8rem;
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+  }
+
+  .list-item strong {
+    font-weight: 600;
+    color: var(--text);
+    display: block;
+    margin-bottom: 0.15rem;
+  }
+
+  .list-item span {
+    color: var(--muted);
+    font-size: 0.82rem;
+  }
+
+  /* LANGUAGES */
+  .lang-grid {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .lang-card {
+    flex: 1;
+    min-width: 160px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.5rem;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.5s, transform 0.5s;
+  }
+
+  .lang-card.visible { opacity: 1; transform: none; }
+
+  .lang-name {
+    font-family: var(--display);
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+  }
+
+  .lang-level {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+  }
+
+  /* CONTACT */
+  .contact-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  .contact-item {
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1rem;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+
+  .contact-item:hover { color: var(--accent); border-color: var(--accent); }
+  .contact-item .icon { color: var(--accent); }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+  }
+
+  /* PROFILE CARD INLINE */
+  .profile-strip {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 2rem 2.5rem;
+    margin-bottom: 4rem;
+    font-size: 0.9rem;
+    line-height: 1.7;
+    color: var(--muted);
+    border-left: 3px solid var(--accent);
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: none; }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .hero { padding: 7rem 1.5rem 3rem; }
+    section { padding: 4rem 1.5rem; }
+    .exp-item { grid-template-columns: 1fr; gap: 0.8rem; }
+    .hero-glyph { display: none; }
+    footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+  }
+
+  /* CURSOR BLINK */
+  .blink {
+    animation: blink 1.2s step-end infinite;
+  }
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <span class="nav-logo">ACR<span class="blink">_</span></span>
+  <div class="lang-toggle">
+    <button class="lang-btn active" onclick="setLang('en')">EN</button>
+    <button class="lang-btn" onclick="setLang('es')">ES</button>
+    <button class="lang-btn" onclick="setLang('de')">DE</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-grid-bg"></div>
+  <p class="hero-eyebrow" data-en="// Electronic Engineer & Game Developer" data-es="// Ingeniero Electrónico & Desarrollador de Videojuegos" data-de="// Elektroingenieur & Spieleentwickler">// Electronic Engineer & Game Developer</p>
+  <h1 class="hero-name">Axel<br><span>Castorena</span><br>Rivera</h1>
+  <p class="hero-title" data-en="Cyber-physical systems specialist. Robotics & AI project management. Game design & development." data-es="Especialista en sistemas ciberfísicos. Gestión de proyectos de robótica e IA. Diseño y desarrollo de videojuegos." data-de="Spezialist für cyber-physische Systeme. Projektmanagement für Robotik & KI. Spieledesign und -entwicklung.">Cyber-physical systems specialist. Robotics & AI project management. Game design & development.</p>
+  <div class="hero-tags">
+    <span class="tag">C / C++</span>
+    <span class="tag">Python</span>
+    <span class="tag highlight" data-en="Game Design" data-es="Diseño de Juegos" data-de="Spieledesign">Game Design</span>
+    <span class="tag">Robotics</span>
+    <span class="tag">Unity</span>
+    <span class="tag highlight" data-en="Project Mgmt" data-es="Gestión de Proyectos" data-de="Projektmanagement">Project Mgmt</span>
+    <span class="tag">Volkswagen AG</span>
+    <span class="tag">CAPM</span>
+  </div>
+  <div class="hero-glyph">&lt;/&gt;</div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ABOUT -->
+<section>
+  <p class="section-label" data-en="01 // PROFILE" data-es="01 // PERFIL" data-de="01 // PROFIL">01 // PROFILE</p>
+  <h2 class="section-title" data-en="About Me" data-es="Sobre Mí" data-de="Über Mich">About Me</h2>
+  <div class="profile-strip" data-en="Electronics Engineer with international, administrative experience in the industrial department of project management of robotics and artificial intelligence projects at Volkswagen AG, Germany. Specialized in cyber-physical systems with solid knowledge in programming, automation, electrical and industrial software. Participant of the KOSPIE–DAAD exchange program and certified in tools such as Artiminds RPS and Universal Robots Software. Game design enthusiast with formal training in video game design and development." data-es="Ingeniero Electrónico con experiencia internacional y administrativa en el departamento industrial de gestión de proyectos de robótica e inteligencia artificial en Volkswagen AG, Alemania. Especializado en sistemas ciberfísicos con sólido conocimiento en programación, automatización, software eléctrico e industrial. Participante del programa de intercambio KOSPIE–DAAD y certificado en herramientas como Artiminds RPS y Universal Robots Software. Entusiasta del diseño de videojuegos con formación formal en diseño y desarrollo de juegos." data-de="Elektroingenieur mit internationaler, administrativer Erfahrung in der Industrieabteilung für Projektmanagement von Robotik- und KI-Projekten bei Volkswagen AG, Deutschland. Spezialisiert auf cyber-physische Systeme mit fundiertem Wissen in Programmierung, Automatisierung und industrieller Software. Teilnehmer des KOSPIE–DAAD-Austauschprogramms und zertifiziert in Tools wie Artiminds RPS und Universal Robots Software. Spieledesign-Enthusiast mit formaler Ausbildung in Spieledesign und -entwicklung.">
+    Electronics Engineer with international, administrative experience in the industrial department of project management of robotics and artificial intelligence projects at Volkswagen AG, Germany. Specialized in cyber-physical systems with solid knowledge in programming, automation, electrical and industrial software. Participant of the KOSPIE–DAAD exchange program and certified in tools such as Artiminds RPS and Universal Robots Software. Game design enthusiast with formal training in video game design and development.
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- EXPERIENCE -->
+<section>
+  <p class="section-label" data-en="02 // EXPERIENCE" data-es="02 // EXPERIENCIA" data-de="02 // ERFAHRUNG">02 // EXPERIENCE</p>
+  <h2 class="section-title" data-en="Work History" data-es="Historial Laboral" data-de="Berufserfahrung">Work History</h2>
+
+  <div class="exp-item scroll-reveal">
+    <div class="exp-meta">
+      <span class="exp-date">JUN 2024 — DEC 2024</span>
+      <span class="exp-company">Volkswagen AG</span>
+      <span class="exp-location">Wolfsburg, Germany</span>
+    </div>
+    <div>
+      <p class="exp-role" data-en="INTERN — PROJECT DEPT. / ROBOTICS & AI" data-es="PRACTICANTE — DPTO. PROYECTOS / ROBÓTICA & IA" data-de="PRAKTIKANT — PROJEKTABT. / ROBOTIK & KI">INTERN — PROJECT DEPT. / ROBOTICS & AI</p>
+      <ul class="exp-tasks">
+        <li data-en="Supporting the project team in robotics and AI initiatives" data-es="Apoyo al equipo de proyecto en iniciativas de robótica e IA" data-de="Unterstützung des Projektteams bei Robotik- und KI-Initiativen">Supporting the project team in robotics and AI initiatives</li>
+        <li data-en="Digitization of content for stakeholder distribution" data-es="Digitalización de contenido para distribución a interesados" data-de="Digitalisierung von Inhalten für die Stakeholder-Verteilung">Digitization of content for stakeholder distribution</li>
+        <li data-en="Contact with suppliers and project partners" data-es="Contacto con proveedores y socios del proyecto" data-de="Kontakt zu Lieferanten und Projektpartnern">Contact with suppliers and project partners</li>
+        <li data-en="Monitoring and controlling project progress and financials" data-es="Monitoreo y control del avance de proyectos y finanzas" data-de="Überwachung und Steuerung von Projektfortschritt und Finanzen">Monitoring and controlling project progress and financials</li>
+        <li data-en="Pre- and post-meeting presentations and documentation" data-es="Presentaciones y documentación pre y post reuniones" data-de="Präsentationen und Dokumentation vor und nach Meetings">Pre- and post-meeting presentations and documentation</li>
+        <li data-en="Workshop organization and scheduling" data-es="Organización y programación de talleres" data-de="Organisation und Planung von Workshops">Workshop organization and scheduling</li>
+        <li data-en="Project risk identification, qualification, and management" data-es="Identificación, calificación y gestión de riesgos de proyecto" data-de="Identifikation, Qualifizierung und Management von Projektrisiken">Project risk identification, qualification, and management</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="exp-item scroll-reveal">
+    <div class="exp-meta">
+      <span class="exp-date">JUN 2019 — AUG 2019</span>
+      <span class="exp-company">Kingsley Pines Camp</span>
+      <span class="exp-location">Maine, USA</span>
+    </div>
+    <div>
+      <p class="exp-role" data-en="SEASONAL — HOUSEKEEPING & MAINTENANCE" data-es="TEMPORAL — LIMPIEZA Y MANTENIMIENTO" data-de="SAISONAL — HAUSMEISTER & WARTUNG">SEASONAL — HOUSEKEEPING & MAINTENANCE</p>
+      <ul class="exp-tasks">
+        <li data-en="Seasonal position: housekeeping and maintenance assistant" data-es="Posición temporal: asistente de limpieza y mantenimiento" data-de="Saisonale Stelle: Hausmeister und Wartungsassistent">Seasonal position: housekeeping and maintenance assistant</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SKILLS -->
+<section>
+  <p class="section-label" data-en="03 // SKILLS" data-es="03 // HABILIDADES" data-de="03 // FÄHIGKEITEN">03 // SKILLS</p>
+  <h2 class="section-title" data-en="Technical Stack" data-es="Stack Técnico" data-de="Technischer Stack">Technical Stack</h2>
+
+  <div class="skills-grid">
+    <div class="skill-card scroll-reveal">
+      <p class="skill-card-label" data-en="PROGRAMMING — ADVANCED" data-es="PROGRAMACIÓN — AVANZADO" data-de="PROGRAMMIERUNG — FORTGESCHRITTEN">PROGRAMMING — ADVANCED</p>
+      <div class="skill-items">
+        <span class="skill-pill">C</span>
+        <span class="skill-pill">C++</span>
+        <span class="skill-pill">Python</span>
+        <span class="skill-pill">PLC</span>
+        <span class="skill-pill">HTML</span>
+      </div>
+    </div>
+    <div class="skill-card scroll-reveal">
+      <p class="skill-card-label" data-en="PROGRAMMING — BASIC" data-es="PROGRAMACIÓN — BÁSICO" data-de="PROGRAMMIERUNG — GRUNDKENNTNISSE">PROGRAMMING — BASIC</p>
+      <div class="skill-items">
+        <span class="skill-pill dim">C#</span>
+        <span class="skill-pill dim">Java</span>
+        <span class="skill-pill dim">VHDL</span>
+      </div>
+    </div>
+    <div class="skill-card scroll-reveal">
+      <p class="skill-card-label" data-en="SOFTWARE — ADVANCED" data-es="SOFTWARE — AVANZADO" data-de="SOFTWARE — FORTGESCHRITTEN">SOFTWARE — ADVANCED</p>
+      <div class="skill-items">
+        <span class="skill-pill">Artiminds RPS</span>
+        <span class="skill-pill">e-Series</span>
+        <span class="skill-pill">CB3</span>
+        <span class="skill-pill">VS Code</span>
+        <span class="skill-pill">Arduino</span>
+        <span class="skill-pill">LabView</span>
+        <span class="skill-pill">Proteus</span>
+      </div>
+    </div>
+    <div class="skill-card scroll-reveal">
+      <p class="skill-card-label" data-en="SOFTWARE — BASIC" data-es="SOFTWARE — BÁSICO" data-de="SOFTWARE — GRUNDKENNTNISSE">SOFTWARE — BASIC</p>
+      <div class="skill-items">
+        <span class="skill-pill dim">Unity</span>
+        <span class="skill-pill dim">SolidWorks</span>
+        <span class="skill-pill dim">Matlab</span>
+        <span class="skill-pill dim">Xilinx</span>
+        <span class="skill-pill dim">FluidSIM</span>
+      </div>
+    </div>
+    <div class="skill-card scroll-reveal">
+      <p class="skill-card-label" data-en="SOFT SKILLS" data-es="HABILIDADES BLANDAS" data-de="SOZIALE KOMPETENZEN">SOFT SKILLS</p>
+      <div class="skill-items">
+        <span class="skill-pill" data-en="Adaptability" data-es="Adaptabilidad" data-de="Anpassungsfähigkeit">Adaptability</span>
+        <span class="skill-pill" data-en="Teamwork" data-es="Trabajo en equipo" data-de="Teamarbeit">Teamwork</span>
+        <span class="skill-pill" data-en="Leadership" data-es="Liderazgo" data-de="Führung">Leadership</span>
+        <span class="skill-pill" data-en="Resilience" data-es="Resiliencia" data-de="Resilienz">Resilience</span>
+      </div>
+    </div>
+    <div class="skill-card scroll-reveal">
+      <p class="skill-card-label" data-en="HARD SKILLS" data-es="HABILIDADES TÉCNICAS" data-de="TECHNISCHE FÄHIGKEITEN">HARD SKILLS</p>
+      <div class="skill-items">
+        <span class="skill-pill" data-en="Data Analysis" data-es="Análisis de datos" data-de="Datenanalyse">Data Analysis</span>
+        <span class="skill-pill" data-en="Proj. Mgmt" data-es="Gest. Proyectos" data-de="Projektmgmt.">Proj. Mgmt</span>
+        <span class="skill-pill" data-en="Programming" data-es="Programación" data-de="Programmierung">Programming</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- EDUCATION -->
+<section>
+  <p class="section-label" data-en="04 // EDUCATION" data-es="04 // EDUCACIÓN" data-de="04 // AUSBILDUNG">04 // EDUCATION</p>
+  <h2 class="section-title" data-en="Academic Background" data-es="Formación Académica" data-de="Akademischer Hintergrund">Academic Background</h2>
+
+  <div class="edu-grid">
+    <div class="edu-card scroll-reveal">
+      <p class="edu-inst">Technische Hochschule Köln</p>
+      <p class="edu-degree" data-en="Exchange Program — Electronic Engineering / Cyber-Physical Systems" data-es="Programa de Intercambio — Ingeniería Electrónica / Sistemas Ciberfísicos" data-de="Austauschprogramm — Elektrotechnik / Cyber-Physische Systeme">Exchange Program — Electronic Engineering / Cyber-Physical Systems</p>
+      <p class="edu-period">2023 — 2024 · Cologne, Germany</p>
+    </div>
+    <div class="edu-card scroll-reveal">
+      <p class="edu-inst">Instituto Tecnológico de Puebla</p>
+      <p class="edu-degree" data-en="Electronic Engineering — Specialty: Cyber-Physical Systems" data-es="Ingeniería Electrónica — Especialidad: Sistemas Ciberfísicos" data-de="Elektrotechnik — Spezialisierung: Cyber-Physische Systeme">Electronic Engineering — Specialty: Cyber-Physical Systems</p>
+      <p class="edu-period">2018 — 2024 · Puebla, México</p>
+    </div>
+    <div class="edu-card scroll-reveal">
+      <p class="edu-inst">C.E. Niños Héroes de Chapultepec</p>
+      <p class="edu-degree" data-en="High School — Exact Sciences" data-es="Preparatoria — Ciencias Exactas" data-de="Gymnasium — Exakte Wissenschaften">High School — Exact Sciences</p>
+      <p class="edu-period">2015 — 2018 · Puebla, México</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- COURSES -->
+<section>
+  <p class="section-label" data-en="05 // CERTIFICATIONS" data-es="05 // CERTIFICACIONES" data-de="05 // ZERTIFIKATE">05 // CERTIFICATIONS</p>
+  <h2 class="section-title" data-en="Courses & Certs" data-es="Cursos y Certificados" data-de="Kurse & Zertifikate">Courses & Certs</h2>
+
+  <div class="list-items">
+    <div class="list-item scroll-reveal">
+      <span class="list-item-icon">[★]</span>
+      <div>
+        <strong data-en="Certified Associate Project Manager (CAPM)" data-es="Gerente de Proyectos Asociado Certificado (CAPM)" data-de="Zertifizierter assoziierter Projektmanager (CAPM)">Certified Associate Project Manager (CAPM)</strong>
+        <span data-en="Project Management Institute · In progress" data-es="Project Management Institute · En curso" data-de="Project Management Institute · In Bearbeitung">Project Management Institute · In progress</span>
+      </div>
+    </div>
+    <div class="list-item scroll-reveal">
+      <span class="list-item-icon">[✓]</span>
+      <div>
+        <strong data-en="Artiminds RPS Software Certification" data-es="Certificación de Software Artiminds RPS" data-de="Artiminds RPS Software-Zertifizierung">Artiminds RPS Software Certification</strong>
+        <span data-en="ArtiMinds Robotics, Germany · Sponsored by Volkswagen AG · 2024" data-es="ArtiMinds Robotics, Alemania · Patrocinado por Volkswagen AG · 2024" data-de="ArtiMinds Robotics, Deutschland · Gesponsert von Volkswagen AG · 2024">ArtiMinds Robotics, Germany · Sponsored by Volkswagen AG · 2024</span>
+      </div>
+    </div>
+    <div class="list-item scroll-reveal">
+      <span class="list-item-icon">[✓]</span>
+      <div>
+        <strong data-en="Universal Robots Certification (e-Series & CB3)" data-es="Certificación Universal Robots (e-Series & CB3)" data-de="Universal Robots Zertifizierung (e-Series & CB3)">Universal Robots Certification (e-Series & CB3)</strong>
+        <span data-en="Universal Robots, Germany · Sponsored by Volkswagen AG · 2024" data-es="Universal Robots, Alemania · Patrocinado por Volkswagen AG · 2024" data-de="Universal Robots, Deutschland · Gesponsert von Volkswagen AG · 2024">Universal Robots, Germany · Sponsored by Volkswagen AG · 2024</span>
+      </div>
+    </div>
+    <div class="list-item scroll-reveal">
+      <span class="list-item-icon">[✓]</span>
+      <div>
+        <strong data-en="Video Game Design & Development" data-es="Diseño y Desarrollo de Videojuegos" data-de="Videospieldesign & -entwicklung">Video Game Design & Development</strong>
+        <span data-en="EBAC, México · 2022" data-es="EBAC, México · 2022" data-de="EBAC, Mexiko · 2022">EBAC, México · 2022</span>
+      </div>
+    </div>
+    <div class="list-item scroll-reveal">
+      <span class="list-item-icon">[✓]</span>
+      <div>
+        <strong data-en="LabView Software Course" data-es="Curso de Software LabView" data-de="LabView Software-Kurs">LabView Software Course</strong>
+        <span data-en="National Institute of Astrophysics, Optics & Electronics, México · 2020" data-es="Instituto Nacional de Astrofísica, Óptica y Electrónica, México · 2020" data-de="Nationales Institut für Astrophysik, Optik & Elektronik, Mexiko · 2020">National Institute of Astrophysics, Optics & Electronics, México · 2020</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ACADEMIC -->
+<section>
+  <p class="section-label" data-en="06 // ACHIEVEMENTS" data-es="06 // LOGROS" data-de="06 // LEISTUNGEN">06 // ACHIEVEMENTS</p>
+  <h2 class="section-title" data-en="Academic Participations" data-es="Participaciones Académicas" data-de="Akademische Teilnahmen">Academic Participations</h2>
+
+  <div class="list-items">
+    <div class="list-item scroll-reveal">
+      <span class="list-item-icon">[◈]</span>
+      <div>
+        <strong data-en="KOSPIE – DAAD Exchange Program" data-es="Programa de Intercambio KOSPIE – DAAD" data-de="KOSPIE – DAAD Austauschprogramm">KOSPIE – DAAD Exchange Program</strong>
+        <span>2023 — 2024</span>
+      </div>
+    </div>
+    <div class="list-item scroll-reveal">
+      <span class="list-item-icon">[◈]</span>
+      <div>
+        <strong data-en="CANSAT 2023 — Iberoamerican Satellite Contest" data-es="CANSAT 2023 — Concurso Iberoamericano de Satélites" data-de="CANSAT 2023 — Iberoamerikanischer Satellitenwettbewerb">CANSAT 2023 — Iberoamerican Satellite Contest</strong>
+        <span data-en="21st place out of 82 teams" data-es="Lugar 21 de 82 equipos" data-de="21. Platz von 82 Teams">21st place out of 82 teams</span>
+      </div>
+    </div>
+    <div class="list-item scroll-reveal">
+      <span class="list-item-icon">[◈]</span>
+      <div>
+        <strong data-en="ROBOTEC 2022 — Line Tracker Contest" data-es="ROBOTEC 2022 — Concurso de Seguidor de Línea" data-de="ROBOTEC 2022 — Linienverfolgungswettbewerb">ROBOTEC 2022 — Line Tracker Contest</strong>
+        <span data-en="Participant" data-es="Participante" data-de="Teilnehmer">Participant</span>
+      </div>
+    </div>
+    <div class="list-item scroll-reveal">
+      <span class="list-item-icon">[◈]</span>
+      <div>
+        <strong data-en="Technological Innovation Competition" data-es="Concurso de Innovación Tecnológica" data-de="Technologischer Innovationswettbewerb">Technological Innovation Competition</strong>
+        <span data-en="Participant · 2019" data-es="Participante · 2019" data-de="Teilnehmer · 2019">Participant · 2019</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- LANGUAGES -->
+<section>
+  <p class="section-label" data-en="07 // LANGUAGES" data-es="07 // IDIOMAS" data-de="07 // SPRACHEN">07 // LANGUAGES</p>
+  <h2 class="section-title" data-en="Multilingual" data-es="Multilingüe" data-de="Mehrsprachig">Multilingual</h2>
+
+  <div class="lang-grid">
+    <div class="lang-card scroll-reveal">
+      <p class="lang-name" data-en="Spanish" data-es="Español" data-de="Spanisch">Spanish</p>
+      <p class="lang-level" data-en="NATIVE" data-es="NATIVO" data-de="MUTTERSPRACHE">NATIVE</p>
+    </div>
+    <div class="lang-card scroll-reveal">
+      <p class="lang-name" data-en="English" data-es="Inglés" data-de="Englisch">English</p>
+      <p class="lang-level">C1 · TOEFL ITP</p>
+    </div>
+    <div class="lang-card scroll-reveal">
+      <p class="lang-name" data-en="German" data-es="Alemán" data-de="Deutsch">German</p>
+      <p class="lang-level">B2 · IIK</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CONTACT -->
+<section>
+  <p class="section-label" data-en="08 // CONTACT" data-es="08 // CONTACTO" data-de="08 // KONTAKT">08 // CONTACT</p>
+  <h2 class="section-title" data-en="Get in Touch" data-es="Contáctame" data-de="Kontakt aufnehmen">Get in Touch</h2>
+
+  <div class="contact-bar">
+    <a href="mailto:axelcastor2000@hotmail.com" class="contact-item">
+      <span class="icon">✉</span> axelcastor2000@hotmail.com
+    </a>
+    <a href="tel:2227637007" class="contact-item">
+      <span class="icon">✆</span> 222 763 7007
+    </a>
+    <span class="contact-item">
+      <span class="icon">◎</span> Puebla, México
+    </span>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span>AXEL CASTORENA RIVERA · ELECTRONIC ENGINEER</span>
+  <span class="blink">▮</span>
+</footer>
+
+<script>
+  // ─── LANGUAGE TOGGLE ───
+  let currentLang = 'en';
+
+  function setLang(lang) {
+    currentLang = lang;
+    document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+    document.querySelector(`.lang-btn[onclick="setLang('${lang}')"]`).classList.add('active');
+
+    document.querySelectorAll('[data-' + lang + ']').forEach(el => {
+      el.textContent = el.getAttribute('data-' + lang);
+    });
+  }
+
+  // ─── SCROLL REVEAL ───
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
+
+  // Init
+  setLang('en');
+</script>
+</body>
+</html>
