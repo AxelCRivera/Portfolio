@@ -11,6 +11,7 @@
     --bg: #0d0d0f;
     --surface: #131316;
     --surface2: #1a1a1f;
+    --surface3: #111114;
     --border: #2a2a32;
     --accent: #c8f542;
     --accent2: #7c6af7;
@@ -20,518 +21,174 @@
     --sans: 'Outfit', sans-serif;
     --display: 'Space Grotesk', sans-serif;
   }
-
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   html { scroll-behavior: smooth; }
-
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: var(--sans);
-    font-weight: 300;
-    line-height: 1.6;
-    overflow-x: hidden;
-  }
-
-  /* SCANLINE OVERLAY */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.03) 2px, rgba(0,0,0,0.03) 4px);
-    pointer-events: none;
-    z-index: 9999;
-  }
+  body { background: var(--bg); color: var(--text); font-family: var(--sans); font-weight: 300; line-height: 1.6; overflow-x: hidden; }
+  body::before { content: ''; position: fixed; inset: 0; background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.03) 2px, rgba(0,0,0,0.03) 4px); pointer-events: none; z-index: 9999; }
 
   /* NAV */
-  nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 100;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1.2rem 3rem;
-    background: rgba(13,13,15,0.85);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--border);
-  }
-
-  .nav-logo {
-    font-family: var(--mono);
-    font-size: 0.85rem;
-    color: var(--accent);
-    letter-spacing: 0.08em;
-  }
-
-  .lang-toggle {
-    display: flex;
-    gap: 0.3rem;
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 0.25rem;
-  }
-
-  .lang-btn {
-    font-family: var(--mono);
-    font-size: 0.7rem;
-    padding: 0.3rem 0.7rem;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    background: transparent;
-    color: var(--muted);
-    letter-spacing: 0.1em;
-    transition: all 0.2s;
-  }
-
-  .lang-btn.active {
-    background: var(--accent);
-    color: #0d0d0f;
-    font-weight: 600;
-  }
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center; padding: 1.2rem 3rem; background: rgba(13,13,15,0.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+  .nav-logo { font-family: var(--mono); font-size: 0.85rem; color: var(--accent); letter-spacing: 0.08em; }
+  .lang-toggle { display: flex; gap: 0.3rem; background: var(--surface2); border: 1px solid var(--border); border-radius: 6px; padding: 0.25rem; }
+  .lang-btn { font-family: var(--mono); font-size: 0.7rem; padding: 0.3rem 0.7rem; border: none; border-radius: 4px; cursor: pointer; background: transparent; color: var(--muted); letter-spacing: 0.1em; transition: all 0.2s; }
+  .lang-btn.active { background: var(--accent); color: #0d0d0f; font-weight: 600; }
 
   /* HERO */
-  .hero {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 8rem 3rem 4rem;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .hero-grid-bg {
-    position: absolute;
-    inset: 0;
-    background-image:
-      linear-gradient(var(--border) 1px, transparent 1px),
-      linear-gradient(90deg, var(--border) 1px, transparent 1px);
-    background-size: 60px 60px;
-    mask-image: radial-gradient(ellipse 80% 60% at 50% 50%, black 30%, transparent 100%);
-    opacity: 0.3;
-  }
-
-  .hero-eyebrow {
-    font-family: var(--mono);
-    font-size: 0.75rem;
-    color: var(--accent);
-    letter-spacing: 0.2em;
-    margin-bottom: 1.5rem;
-    opacity: 0;
-    animation: fadeUp 0.8s 0.2s forwards;
-  }
-
-  .hero-name {
-    font-family: var(--display);
-    font-size: clamp(3rem, 8vw, 7rem);
-    font-weight: 700;
-    line-height: 0.95;
-    letter-spacing: -0.03em;
-    margin-bottom: 1.5rem;
-    opacity: 0;
-    animation: fadeUp 0.8s 0.4s forwards;
-  }
-
-  .hero-name span {
-    color: var(--accent);
-  }
-
-  .hero-title {
-    font-family: var(--display);
-    font-size: clamp(1rem, 2.5vw, 1.4rem);
-    font-weight: 300;
-    color: var(--muted);
-    margin-bottom: 2.5rem;
-    max-width: 600px;
-    opacity: 0;
-    animation: fadeUp 0.8s 0.6s forwards;
-  }
-
-  .hero-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.6rem;
-    opacity: 0;
-    animation: fadeUp 0.8s 0.8s forwards;
-  }
-
-  .tag {
-    font-family: var(--mono);
-    font-size: 0.7rem;
-    padding: 0.35rem 0.8rem;
-    border: 1px solid var(--border);
-    border-radius: 3px;
-    color: var(--muted);
-    letter-spacing: 0.1em;
-    transition: all 0.2s;
-  }
-
+  .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 8rem 3rem 4rem; position: relative; overflow: hidden; }
+  .hero-grid-bg { position: absolute; inset: 0; background-image: linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px); background-size: 60px 60px; mask-image: radial-gradient(ellipse 80% 60% at 50% 50%, black 30%, transparent 100%); opacity: 0.3; }
+  .hero-eyebrow { font-family: var(--mono); font-size: 0.75rem; color: var(--accent); letter-spacing: 0.2em; margin-bottom: 1.5rem; opacity: 0; animation: fadeUp 0.8s 0.2s forwards; }
+  .hero-name { font-family: var(--display); font-size: clamp(3rem, 8vw, 7rem); font-weight: 700; line-height: 0.95; letter-spacing: -0.03em; margin-bottom: 1.5rem; opacity: 0; animation: fadeUp 0.8s 0.4s forwards; }
+  .hero-name span { color: var(--accent); }
+  .hero-title { font-family: var(--display); font-size: clamp(1rem, 2.5vw, 1.4rem); font-weight: 300; color: var(--muted); margin-bottom: 2.5rem; max-width: 600px; opacity: 0; animation: fadeUp 0.8s 0.6s forwards; }
+  .hero-tags { display: flex; flex-wrap: wrap; gap: 0.6rem; opacity: 0; animation: fadeUp 0.8s 0.8s forwards; }
+  .tag { font-family: var(--mono); font-size: 0.7rem; padding: 0.35rem 0.8rem; border: 1px solid var(--border); border-radius: 3px; color: var(--muted); letter-spacing: 0.1em; transition: all 0.2s; }
   .tag:hover { border-color: var(--accent); color: var(--accent); }
   .tag.highlight { border-color: var(--accent2); color: var(--accent2); }
-
-  /* GLYPH DECORATION */
-  .hero-glyph {
-    position: absolute;
-    right: 5%;
-    top: 50%;
-    transform: translateY(-50%);
-    font-family: var(--mono);
-    font-size: clamp(8rem, 18vw, 18rem);
-    color: var(--surface2);
-    letter-spacing: -0.1em;
-    pointer-events: none;
-    user-select: none;
-    line-height: 1;
-    opacity: 0;
-    animation: fadeIn 1.2s 1s forwards;
-  }
+  .hero-glyph { position: absolute; right: 5%; top: 50%; transform: translateY(-50%); font-family: var(--mono); font-size: clamp(8rem, 18vw, 18rem); color: var(--surface2); letter-spacing: -0.1em; pointer-events: none; user-select: none; line-height: 1; opacity: 0; animation: fadeIn 1.2s 1s forwards; }
 
   /* SECTIONS */
-  section {
-    padding: 6rem 3rem;
-    max-width: 1100px;
-    margin: 0 auto;
-  }
+  section { padding: 6rem 3rem; max-width: 1100px; margin: 0 auto; }
+  .section-label { font-family: var(--mono); font-size: 0.7rem; color: var(--accent); letter-spacing: 0.25em; margin-bottom: 0.8rem; }
+  .section-title { font-family: var(--display); font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 600; letter-spacing: -0.02em; margin-bottom: 3rem; line-height: 1.1; }
+  .divider { width: 100%; height: 1px; background: var(--border); }
 
-  .section-label {
-    font-family: var(--mono);
-    font-size: 0.7rem;
-    color: var(--accent);
-    letter-spacing: 0.25em;
-    margin-bottom: 0.8rem;
-  }
-
-  .section-title {
-    font-family: var(--display);
-    font-size: clamp(1.8rem, 4vw, 2.8rem);
-    font-weight: 600;
-    letter-spacing: -0.02em;
-    margin-bottom: 3rem;
-    line-height: 1.1;
-  }
-
-  .divider {
-    width: 100%;
-    height: 1px;
-    background: var(--border);
-    margin: 0;
-  }
-
-  /* EXPERIENCE */
-  .exp-item {
-    display: grid;
-    grid-template-columns: 220px 1fr;
-    gap: 2rem;
-    padding: 2.5rem 0;
-    border-bottom: 1px solid var(--border);
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.6s, transform 0.6s;
-  }
-
+  /* EXP */
+  .exp-item { display: grid; grid-template-columns: 220px 1fr; gap: 2rem; padding: 2.5rem 0; border-bottom: 1px solid var(--border); opacity: 0; transform: translateY(20px); transition: opacity 0.6s, transform 0.6s; }
   .exp-item.visible { opacity: 1; transform: none; }
+  .exp-meta { display: flex; flex-direction: column; gap: 0.4rem; }
+  .exp-date { font-family: var(--mono); font-size: 0.7rem; color: var(--accent); letter-spacing: 0.1em; }
+  .exp-company { font-family: var(--display); font-weight: 600; font-size: 1rem; }
+  .exp-location { font-size: 0.8rem; color: var(--muted); }
+  .exp-role { font-family: var(--mono); font-size: 0.75rem; color: var(--accent2); letter-spacing: 0.05em; margin-bottom: 1rem; }
+  .exp-tasks { list-style: none; display: flex; flex-direction: column; gap: 0.4rem; }
+  .exp-tasks li { font-size: 0.88rem; color: var(--muted); padding-left: 1.2rem; position: relative; }
+  .exp-tasks li::before { content: '›'; position: absolute; left: 0; color: var(--accent); }
 
-  .exp-meta {
-    display: flex;
-    flex-direction: column;
-    gap: 0.4rem;
-  }
-
-  .exp-date {
-    font-family: var(--mono);
-    font-size: 0.7rem;
-    color: var(--accent);
-    letter-spacing: 0.1em;
-  }
-
-  .exp-company {
-    font-family: var(--display);
-    font-weight: 600;
-    font-size: 1rem;
-  }
-
-  .exp-location {
-    font-size: 0.8rem;
-    color: var(--muted);
-  }
-
-  .exp-role {
-    font-family: var(--mono);
-    font-size: 0.75rem;
-    color: var(--accent2);
-    letter-spacing: 0.05em;
-    margin-bottom: 1rem;
-  }
-
-  .exp-tasks {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 0.4rem;
-  }
-
-  .exp-tasks li {
-    font-size: 0.88rem;
-    color: var(--muted);
-    padding-left: 1.2rem;
-    position: relative;
-  }
-
-  .exp-tasks li::before {
-    content: '›';
-    position: absolute;
-    left: 0;
-    color: var(--accent);
-  }
-
-  /* SKILLS GRID */
-  .skills-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 1.2rem;
-  }
-
-  .skill-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 1.5rem;
-    transition: border-color 0.2s, transform 0.2s;
-    opacity: 0;
-    transform: translateY(16px);
-    transition: opacity 0.5s, transform 0.5s, border-color 0.2s;
-  }
-
+  /* SKILLS */
+  .skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.2rem; }
+  .skill-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; opacity: 0; transform: translateY(16px); transition: opacity 0.5s, transform 0.5s, border-color 0.2s; }
   .skill-card.visible { opacity: 1; transform: none; }
   .skill-card:hover { border-color: var(--accent); transform: translateY(-2px); }
-
-  .skill-card-label {
-    font-family: var(--mono);
-    font-size: 0.65rem;
-    color: var(--accent);
-    letter-spacing: 0.2em;
-    margin-bottom: 0.8rem;
-  }
-
-  .skill-items {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem;
-  }
-
-  .skill-pill {
-    font-size: 0.78rem;
-    padding: 0.2rem 0.6rem;
-    border-radius: 3px;
-    background: var(--surface2);
-    color: var(--text);
-  }
-
+  .skill-card-label { font-family: var(--mono); font-size: 0.65rem; color: var(--accent); letter-spacing: 0.2em; margin-bottom: 0.8rem; }
+  .skill-items { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .skill-pill { font-size: 0.78rem; padding: 0.2rem 0.6rem; border-radius: 3px; background: var(--surface2); color: var(--text); }
   .skill-pill.dim { color: var(--muted); }
 
   /* EDUCATION */
-  .edu-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 1.2rem;
-  }
-
-  .edu-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 1.8rem;
-    opacity: 0;
-    transform: translateY(16px);
-    transition: opacity 0.5s, transform 0.5s;
-  }
-
+  .edu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.2rem; align-items: start; }
+  .edu-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 1.8rem; opacity: 0; transform: translateY(16px); transition: opacity 0.5s, transform 0.5s; }
   .edu-card.visible { opacity: 1; transform: none; }
+  .edu-card.featured { border-color: var(--accent2); position: relative; }
+  .edu-card.featured::after { content: 'ACTUAL'; position: absolute; top: 1rem; right: 1rem; font-family: var(--mono); font-size: 0.58rem; color: var(--accent2); letter-spacing: 0.2em; border: 1px solid var(--accent2); padding: 0.15rem 0.45rem; border-radius: 2px; }
+  .edu-inst { font-family: var(--display); font-weight: 600; font-size: 1rem; margin-bottom: 0.4rem; }
+  .edu-degree { font-size: 0.83rem; color: var(--muted); margin-bottom: 0.8rem; line-height: 1.4; }
+  .edu-period { font-family: var(--mono); font-size: 0.68rem; color: var(--accent); letter-spacing: 0.1em; }
 
-  .edu-inst {
-    font-family: var(--display);
-    font-weight: 600;
-    font-size: 1rem;
-    margin-bottom: 0.4rem;
-  }
-
-  .edu-degree {
-    font-size: 0.83rem;
-    color: var(--muted);
-    margin-bottom: 0.8rem;
-    line-height: 1.4;
-  }
-
-  .edu-period {
-    font-family: var(--mono);
-    font-size: 0.68rem;
-    color: var(--accent);
-    letter-spacing: 0.1em;
-  }
-
-  /* COURSES & ACHIEVEMENTS */
-  .list-items {
-    display: flex;
-    flex-direction: column;
-    gap: 0.8rem;
-  }
-
-  .list-item {
-    display: flex;
-    gap: 1rem;
-    align-items: flex-start;
-    padding: 1rem 1.2rem;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    font-size: 0.88rem;
-    opacity: 0;
-    transform: translateX(-12px);
-    transition: opacity 0.5s, transform 0.5s;
-  }
-
+  /* LIST ITEMS */
+  .list-items { display: flex; flex-direction: column; gap: 0.8rem; }
+  .list-item { display: flex; gap: 1rem; align-items: flex-start; padding: 1rem 1.2rem; background: var(--surface); border: 1px solid var(--border); border-radius: 6px; font-size: 0.88rem; opacity: 0; transform: translateX(-12px); transition: opacity 0.5s, transform 0.5s; }
   .list-item.visible { opacity: 1; transform: none; }
-  .list-item:hover { border-color: var(--border); }
+  .list-item-icon { font-family: var(--mono); color: var(--accent); font-size: 0.8rem; flex-shrink: 0; margin-top: 0.1rem; }
+  .list-item strong { font-weight: 600; color: var(--text); display: block; margin-bottom: 0.15rem; }
+  .list-item span { color: var(--muted); font-size: 0.82rem; }
 
-  .list-item-icon {
-    font-family: var(--mono);
-    color: var(--accent);
-    font-size: 0.8rem;
-    flex-shrink: 0;
-    margin-top: 0.1rem;
-  }
-
-  .list-item strong {
-    font-weight: 600;
-    color: var(--text);
-    display: block;
-    margin-bottom: 0.15rem;
-  }
-
-  .list-item span {
-    color: var(--muted);
-    font-size: 0.82rem;
-  }
-
-  /* LANGUAGES */
-  .lang-grid {
-    display: flex;
-    gap: 1.5rem;
-    flex-wrap: wrap;
-  }
-
-  .lang-card {
-    flex: 1;
-    min-width: 160px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 1.5rem;
-    text-align: center;
-    opacity: 0;
-    transform: translateY(16px);
-    transition: opacity 0.5s, transform 0.5s;
-  }
-
+  /* LANG */
+  .lang-grid { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+  .lang-card { flex: 1; min-width: 160px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; text-align: center; opacity: 0; transform: translateY(16px); transition: opacity 0.5s, transform 0.5s; }
   .lang-card.visible { opacity: 1; transform: none; }
-
-  .lang-name {
-    font-family: var(--display);
-    font-size: 1.4rem;
-    font-weight: 600;
-    margin-bottom: 0.3rem;
-  }
-
-  .lang-level {
-    font-family: var(--mono);
-    font-size: 0.68rem;
-    color: var(--accent);
-    letter-spacing: 0.15em;
-  }
+  .lang-name { font-family: var(--display); font-size: 1.4rem; font-weight: 600; margin-bottom: 0.3rem; }
+  .lang-level { font-family: var(--mono); font-size: 0.68rem; color: var(--accent); letter-spacing: 0.15em; }
 
   /* CONTACT */
-  .contact-bar {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    margin-top: 2rem;
-  }
-
-  .contact-item {
-    font-family: var(--mono);
-    font-size: 0.8rem;
-    color: var(--muted);
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.6rem 1rem;
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    text-decoration: none;
-    transition: all 0.2s;
-  }
-
+  .contact-bar { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 2rem; }
+  .contact-item { font-family: var(--mono); font-size: 0.8rem; color: var(--muted); display: flex; align-items: center; gap: 0.5rem; padding: 0.6rem 1rem; border: 1px solid var(--border); border-radius: 4px; text-decoration: none; transition: all 0.2s; }
   .contact-item:hover { color: var(--accent); border-color: var(--accent); }
   .contact-item .icon { color: var(--accent); }
 
-  /* FOOTER */
-  footer {
-    border-top: 1px solid var(--border);
-    padding: 2rem 3rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-family: var(--mono);
-    font-size: 0.68rem;
-    color: var(--muted);
-    letter-spacing: 0.08em;
-  }
+  /* RELOCATION BADGE */
+  .relocation-note { display: inline-flex; align-items: center; gap: 0.5rem; font-family: var(--mono); font-size: 0.68rem; color: var(--accent); letter-spacing: 0.15em; border: 1px solid rgba(200,245,66,0.3); background: rgba(200,245,66,0.04); padding: 0.45rem 0.9rem; border-radius: 4px; margin-top: 1.5rem; }
+  .relocation-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: pulse 2s infinite; }
+  @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(0.8); } }
 
-  /* PROFILE CARD INLINE */
-  .profile-strip {
-    background: var(--surface);
-    border: 1px solid var(--border);
+  /* PROFILE STRIP */
+  .profile-strip { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 2rem 2.5rem; margin-bottom: 4rem; font-size: 0.9rem; line-height: 1.7; color: var(--muted); border-left: 3px solid var(--accent); }
+
+  /* FOOTER */
+  footer { border-top: 1px solid var(--border); padding: 2rem 3rem; display: flex; justify-content: space-between; align-items: center; font-family: var(--mono); font-size: 0.68rem; color: var(--muted); letter-spacing: 0.08em; }
+
+  /* ══════════════════════════════════════════
+     MASTER SPECIALIZATIONS TAB SECTION
+  ══════════════════════════════════════════ */
+  .master-spec-section { padding: 6rem 3rem; max-width: 1100px; margin: 0 auto; }
+
+  .master-intro {
+    background: linear-gradient(135deg, rgba(124,106,247,0.07) 0%, rgba(200,245,66,0.03) 100%);
+    border: 1px solid rgba(124,106,247,0.35);
     border-radius: 10px;
-    padding: 2rem 2.5rem;
-    margin-bottom: 4rem;
-    font-size: 0.9rem;
-    line-height: 1.7;
-    color: var(--muted);
-    border-left: 3px solid var(--accent);
+    padding: 1.6rem 2rem;
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
   }
+  .master-intro-badge { font-family: var(--mono); font-size: 0.6rem; color: var(--accent2); letter-spacing: 0.2em; border: 1px solid var(--accent2); padding: 0.3rem 0.7rem; border-radius: 3px; white-space: nowrap; flex-shrink: 0; }
+  .master-intro-text { font-size: 0.87rem; color: var(--muted); line-height: 1.6; }
+  .master-intro-text strong { color: var(--text); }
+
+  /* TAB NAV */
+  .tab-nav { display: flex; overflow-x: auto; scrollbar-width: none; border-bottom: 1px solid var(--border); }
+  .tab-nav::-webkit-scrollbar { display: none; }
+  .tab-btn { font-family: var(--mono); font-size: 0.63rem; letter-spacing: 0.1em; padding: 0.9rem 1.2rem; border: none; background: transparent; color: var(--muted); cursor: pointer; white-space: nowrap; border-bottom: 2px solid transparent; margin-bottom: -1px; transition: all 0.2s; }
+  .tab-btn:hover { color: var(--text); }
+  .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+  /* TAB PANELS */
+  .tab-panels { background: var(--surface); border: 1px solid var(--border); border-top: none; border-radius: 0 0 10px 10px; }
+  .tab-panel { display: none; padding: 2.5rem; animation: panelIn 0.3s ease; }
+  .tab-panel.active { display: block; }
+  @keyframes panelIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+  .panel-header { display: flex; align-items: flex-start; gap: 1.2rem; margin-bottom: 1.5rem; }
+  .panel-icon { font-family: var(--mono); font-size: 1.5rem; color: var(--accent); flex-shrink: 0; line-height: 1; }
+  .panel-title { font-family: var(--display); font-size: 1.2rem; font-weight: 600; margin-bottom: 0.2rem; }
+  .panel-subtitle { font-family: var(--mono); font-size: 0.6rem; color: var(--accent2); letter-spacing: 0.12em; }
+  .panel-desc { font-size: 0.88rem; color: var(--muted); line-height: 1.8; margin-bottom: 1.5rem; }
+
+  .comp-label { font-family: var(--mono); font-size: 0.6rem; color: var(--accent); letter-spacing: 0.2em; margin-bottom: 0.7rem; }
+  .comp-tags { display: flex; flex-wrap: wrap; gap: 0.45rem; margin-bottom: 1.8rem; }
+  .comp-tag { font-family: var(--mono); font-size: 0.67rem; padding: 0.28rem 0.7rem; border-radius: 3px; border: 1px solid var(--border); color: var(--muted); letter-spacing: 0.04em; transition: all 0.2s; }
+  .comp-tag:hover { border-color: var(--accent); color: var(--accent); }
+  .comp-tag.tool { border-color: rgba(124,106,247,0.4); color: var(--accent2); }
+
+  /* IMAGE SLOTS */
+  .img-upload-zone { border: 1px dashed rgba(255,255,255,0.07); border-radius: 8px; padding: 1.5rem; }
+  .img-upload-label { font-family: var(--mono); font-size: 0.6rem; color: var(--muted); letter-spacing: 0.15em; display: block; margin-bottom: 0.9rem; }
+  .img-placeholder-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.7rem; }
+  .img-placeholder { aspect-ratio: 16/9; background: var(--surface2); border: 1px solid var(--border); border-radius: 6px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.4rem; cursor: pointer; transition: border-color 0.2s; font-family: var(--mono); font-size: 0.58rem; color: var(--muted); letter-spacing: 0.1em; position: relative; overflow: hidden; }
+  .img-placeholder:hover { border-color: var(--accent); color: var(--accent); }
+  .img-placeholder input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+  .img-placeholder img { width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; border-radius: 5px; display: none; }
+  .img-placeholder.has-image .ph-icon, .img-placeholder.has-image .ph-text { display: none; }
+  .img-placeholder.has-image img { display: block; }
+  .ph-icon { font-size: 1rem; }
 
   /* ANIMATIONS */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(24px); }
-    to { opacity: 1; transform: none; }
-  }
-
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  .blink { animation: blink 1.2s step-end infinite; }
+  @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 
   /* RESPONSIVE */
   @media (max-width: 768px) {
     nav { padding: 1rem 1.5rem; }
     .hero { padding: 7rem 1.5rem 3rem; }
-    section { padding: 4rem 1.5rem; }
+    section, .master-spec-section { padding: 4rem 1.5rem; }
     .exp-item { grid-template-columns: 1fr; gap: 0.8rem; }
     .hero-glyph { display: none; }
     footer { flex-direction: column; gap: 0.5rem; text-align: center; }
-  }
-
-  /* CURSOR BLINK */
-  .blink {
-    animation: blink 1.2s step-end infinite;
-  }
-  @keyframes blink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0; }
+    .tab-panel { padding: 1.5rem; }
+    .img-placeholder-grid { grid-template-columns: repeat(2, 1fr); }
+    .master-intro { flex-direction: column; gap: 0.8rem; }
   }
 </style>
 </head>
@@ -550,18 +207,24 @@
 <!-- HERO -->
 <div class="hero">
   <div class="hero-grid-bg"></div>
-  <p class="hero-eyebrow" data-en="// Electronic Engineer & Game Developer" data-es="// Ingeniero Electrónico & Desarrollador de Videojuegos" data-de="// Elektroingenieur & Spieleentwickler">// Electronic Engineer & Game Developer</p>
+  <p class="hero-eyebrow"
+     data-en="// Game Designer & Developer · Electronic Engineer · Associate Project Manager"
+     data-es="// Game Designer & Developer · Ingeniero Electrónico · Associate Project Manager"
+     data-de="// Game Designer & Developer · Elektroingenieur · Associate Project Manager">// Game Designer & Developer · Electronic Engineer · Associate Project Manager</p>
   <h1 class="hero-name">Axel<br><span>Castorena</span><br>Rivera</h1>
-  <p class="hero-title" data-en="Cyber-physical systems specialist. Robotics & AI project management. Game design & development." data-es="Especialista en sistemas ciberfísicos. Gestión de proyectos de robótica e IA. Diseño y desarrollo de videojuegos." data-de="Spezialist für cyber-physische Systeme. Projektmanagement für Robotik & KI. Spieledesign und -entwicklung.">Cyber-physical systems specialist. Robotics & AI project management. Game design & development.</p>
+  <p class="hero-title"
+     data-en="Cyber-physical systems specialist. Robotics & AI project management. Game design & development."
+     data-es="Especialista en sistemas ciberfísicos. Gestión de proyectos de robótica e IA. Diseño y desarrollo de videojuegos."
+     data-de="Spezialist für cyber-physische Systeme. Projektmanagement für Robotik & KI. Spieledesign & -entwicklung.">Cyber-physical systems specialist. Robotics & AI project management. Game design & development.</p>
   <div class="hero-tags">
-    <span class="tag">C / C++</span>
-    <span class="tag">Python</span>
     <span class="tag highlight" data-en="Game Design" data-es="Diseño de Juegos" data-de="Spieledesign">Game Design</span>
+    <span class="tag highlight" data-en="Game Development" data-es="Desarrollo de Juegos" data-de="Spielentwicklung">Game Development</span>
+    <span class="tag">Unity · Unreal</span>
+    <span class="tag">Blueprints</span>
+    <span class="tag">C / C++ / C#</span>
+    <span class="tag">Python</span>
     <span class="tag">Robotics</span>
-    <span class="tag">Unity</span>
-    <span class="tag highlight" data-en="Project Mgmt" data-es="Gestión de Proyectos" data-de="Projektmanagement">Project Mgmt</span>
-    <span class="tag">Volkswagen AG</span>
-    <span class="tag">CAPM</span>
+    <span class="tag highlight" data-en="Project Management" data-es="Gestión de Proyectos" data-de="Projektmanagement">Project Management</span>
   </div>
   <div class="hero-glyph">&lt;/&gt;</div>
 </div>
@@ -572,8 +235,11 @@
 <section>
   <p class="section-label" data-en="01 // PROFILE" data-es="01 // PERFIL" data-de="01 // PROFIL">01 // PROFILE</p>
   <h2 class="section-title" data-en="About Me" data-es="Sobre Mí" data-de="Über Mich">About Me</h2>
-  <div class="profile-strip" data-en="Electronics Engineer with international, administrative experience in the industrial department of project management of robotics and artificial intelligence projects at Volkswagen AG, Germany. Specialized in cyber-physical systems with solid knowledge in programming, automation, electrical and industrial software. Participant of the KOSPIE–DAAD exchange program and certified in tools such as Artiminds RPS and Universal Robots Software. Game design enthusiast with formal training in video game design and development." data-es="Ingeniero Electrónico con experiencia internacional y administrativa en el departamento industrial de gestión de proyectos de robótica e inteligencia artificial en Volkswagen AG, Alemania. Especializado en sistemas ciberfísicos con sólido conocimiento en programación, automatización, software eléctrico e industrial. Participante del programa de intercambio KOSPIE–DAAD y certificado en herramientas como Artiminds RPS y Universal Robots Software. Entusiasta del diseño de videojuegos con formación formal en diseño y desarrollo de juegos." data-de="Elektroingenieur mit internationaler, administrativer Erfahrung in der Industrieabteilung für Projektmanagement von Robotik- und KI-Projekten bei Volkswagen AG, Deutschland. Spezialisiert auf cyber-physische Systeme mit fundiertem Wissen in Programmierung, Automatisierung und industrieller Software. Teilnehmer des KOSPIE–DAAD-Austauschprogramms und zertifiziert in Tools wie Artiminds RPS und Universal Robots Software. Spieledesign-Enthusiast mit formaler Ausbildung in Spieledesign und -entwicklung.">
-    Electronics Engineer with international, administrative experience in the industrial department of project management of robotics and artificial intelligence projects at Volkswagen AG, Germany. Specialized in cyber-physical systems with solid knowledge in programming, automation, electrical and industrial software. Participant of the KOSPIE–DAAD exchange program and certified in tools such as Artiminds RPS and Universal Robots Software. Game design enthusiast with formal training in video game design and development.
+  <div class="profile-strip"
+     data-en="Game Designer and Electronic Engineer with a passion for building compelling interactive experiences. Pursuing a Master's in Video Game Design & Development at Universidad Europea de Madrid, with hands-on expertise across the full game development pipeline — from design documentation and level design to engine implementation, UX/UI, and gameplay prototyping. Internationally experienced through a Volkswagen AG internship in Germany (robotics & AI project management) and the KOSPIE–DAAD exchange program at TH Köln. Open to relocation."
+     data-es="Game Designer e Ingeniero Electrónico con pasión por crear experiencias interactivas memorables. Cursando un Máster en Diseño y Desarrollo de Videojuegos en la Universidad Europea de Madrid, con experiencia práctica en todo el pipeline de desarrollo — desde la documentación de diseño y el diseño de niveles hasta la implementación en motores, UX/UI y prototipado de gameplay. Experiencia internacional en Volkswagen AG, Alemania, y el programa de intercambio KOSPIE–DAAD en TH Köln. Disponible para reubicación."
+     data-de="Game Designer und Elektroingenieur mit Leidenschaft für fesselnde interaktive Erlebnisse. Masterstudium an der Universidad Europea de Madrid, mit praktischer Erfahrung entlang der gesamten Spielentwicklungs-Pipeline. International erfahren durch ein Praktikum bei Volkswagen AG und das KOSPIE–DAAD-Austauschprogramm. Offen für Umzug.">
+    Game Designer and Electronic Engineer with a passion for building compelling interactive experiences. Pursuing a Master's in Video Game Design & Development at Universidad Europea de Madrid, with hands-on expertise across the full game development pipeline — from design documentation and level design to engine implementation, UX/UI, and gameplay prototyping. Internationally experienced through a Volkswagen AG internship in Germany (robotics & AI project management) and the KOSPIE–DAAD exchange program at TH Köln. Open to relocation.
   </div>
 </section>
 
@@ -586,20 +252,23 @@
 
   <div class="exp-item scroll-reveal">
     <div class="exp-meta">
-      <span class="exp-date">JUN 2024 — DEC 2024</span>
+      <span class="exp-date">JUN 2024 — DIC 2024</span>
       <span class="exp-company">Volkswagen AG</span>
       <span class="exp-location">Wolfsburg, Germany</span>
     </div>
     <div>
-      <p class="exp-role" data-en="INTERN — PROJECT DEPT. / ROBOTICS & AI" data-es="PRACTICANTE — DPTO. PROYECTOS / ROBÓTICA & IA" data-de="PRAKTIKANT — PROJEKTABT. / ROBOTIK & KI">INTERN — PROJECT DEPT. / ROBOTICS & AI</p>
+      <p class="exp-role"
+         data-en="INTERN — PROJECT MANAGEMENT / ROBOTICS & AI"
+         data-es="PRACTICANTE — GESTIÓN DE PROYECTOS / ROBÓTICA & IA"
+         data-de="PRAKTIKANT — PROJEKTMANAGEMENT / ROBOTIK & KI">INTERN — PROJECT MANAGEMENT / ROBOTICS & AI</p>
       <ul class="exp-tasks">
         <li data-en="Supporting the project team in robotics and AI initiatives" data-es="Apoyo al equipo de proyecto en iniciativas de robótica e IA" data-de="Unterstützung des Projektteams bei Robotik- und KI-Initiativen">Supporting the project team in robotics and AI initiatives</li>
-        <li data-en="Digitization of content for stakeholder distribution" data-es="Digitalización de contenido para distribución a interesados" data-de="Digitalisierung von Inhalten für die Stakeholder-Verteilung">Digitization of content for stakeholder distribution</li>
+        <li data-en="Digitization of content for stakeholder distribution" data-es="Digitalización de contenido para distribución a interesados" data-de="Digitalisierung von Inhalten für Stakeholder">Digitization of content for stakeholder distribution</li>
         <li data-en="Contact with suppliers and project partners" data-es="Contacto con proveedores y socios del proyecto" data-de="Kontakt zu Lieferanten und Projektpartnern">Contact with suppliers and project partners</li>
-        <li data-en="Monitoring and controlling project progress and financials" data-es="Monitoreo y control del avance de proyectos y finanzas" data-de="Überwachung und Steuerung von Projektfortschritt und Finanzen">Monitoring and controlling project progress and financials</li>
+        <li data-en="Monitoring and controlling project progress and financials" data-es="Monitoreo y control del avance de proyectos y finanzas" data-de="Überwachung von Projektfortschritt und Finanzen">Monitoring and controlling project progress and financials</li>
         <li data-en="Pre- and post-meeting presentations and documentation" data-es="Presentaciones y documentación pre y post reuniones" data-de="Präsentationen und Dokumentation vor und nach Meetings">Pre- and post-meeting presentations and documentation</li>
         <li data-en="Workshop organization and scheduling" data-es="Organización y programación de talleres" data-de="Organisation und Planung von Workshops">Workshop organization and scheduling</li>
-        <li data-en="Project risk identification, qualification, and management" data-es="Identificación, calificación y gestión de riesgos de proyecto" data-de="Identifikation, Qualifizierung und Management von Projektrisiken">Project risk identification, qualification, and management</li>
+        <li data-en="Project risk identification, qualification, and management" data-es="Identificación, calificación y gestión de riesgos de proyecto" data-de="Identifikation und Management von Projektrisiken">Project risk identification, qualification, and management</li>
       </ul>
     </div>
   </div>
@@ -611,7 +280,10 @@
       <span class="exp-location">Maine, USA</span>
     </div>
     <div>
-      <p class="exp-role" data-en="SEASONAL — HOUSEKEEPING & MAINTENANCE" data-es="TEMPORAL — LIMPIEZA Y MANTENIMIENTO" data-de="SAISONAL — HAUSMEISTER & WARTUNG">SEASONAL — HOUSEKEEPING & MAINTENANCE</p>
+      <p class="exp-role"
+         data-en="SEASONAL — HOUSEKEEPING & MAINTENANCE"
+         data-es="TEMPORAL — LIMPIEZA Y MANTENIMIENTO"
+         data-de="SAISONAL — HAUSMEISTER & WARTUNG">SEASONAL — HOUSEKEEPING & MAINTENANCE</p>
       <ul class="exp-tasks">
         <li data-en="Seasonal position: housekeeping and maintenance assistant" data-es="Posición temporal: asistente de limpieza y mantenimiento" data-de="Saisonale Stelle: Hausmeister und Wartungsassistent">Seasonal position: housekeeping and maintenance assistant</li>
       </ul>
@@ -625,46 +297,56 @@
 <section>
   <p class="section-label" data-en="03 // SKILLS" data-es="03 // HABILIDADES" data-de="03 // FÄHIGKEITEN">03 // SKILLS</p>
   <h2 class="section-title" data-en="Technical Stack" data-es="Stack Técnico" data-de="Technischer Stack">Technical Stack</h2>
-
   <div class="skills-grid">
     <div class="skill-card scroll-reveal">
-      <p class="skill-card-label" data-en="PROGRAMMING — ADVANCED" data-es="PROGRAMACIÓN — AVANZADO" data-de="PROGRAMMIERUNG — FORTGESCHRITTEN">PROGRAMMING — ADVANCED</p>
+      <p class="skill-card-label" data-en="GAME ENGINES" data-es="MOTORES DE JUEGO" data-de="GAME ENGINES">GAME ENGINES</p>
       <div class="skill-items">
-        <span class="skill-pill">C</span>
-        <span class="skill-pill">C++</span>
-        <span class="skill-pill">Python</span>
-        <span class="skill-pill">PLC</span>
-        <span class="skill-pill">HTML</span>
+        <span class="skill-pill">Unity</span>
+        <span class="skill-pill">Unreal Engine</span>
+        <span class="skill-pill">Blueprints</span>
+        <span class="skill-pill">URP</span>
       </div>
     </div>
     <div class="skill-card scroll-reveal">
-      <p class="skill-card-label" data-en="PROGRAMMING — BASIC" data-es="PROGRAMACIÓN — BÁSICO" data-de="PROGRAMMIERUNG — GRUNDKENNTNISSE">PROGRAMMING — BASIC</p>
+      <p class="skill-card-label" data-en="DESIGN TOOLS" data-es="HERRAMIENTAS DE DISEÑO" data-de="DESIGNWERKZEUGE">DESIGN TOOLS</p>
       <div class="skill-items">
-        <span class="skill-pill dim">C#</span>
-        <span class="skill-pill dim">Java</span>
+        <span class="skill-pill">Figma</span>
+        <span class="skill-pill">Moodboards</span>
+        <span class="skill-pill dim">Beat Charts</span>
+      </div>
+    </div>
+    <div class="skill-card scroll-reveal">
+      <p class="skill-card-label" data-en="PROGRAMMING" data-es="PROGRAMACIÓN" data-de="PROGRAMMIERUNG">PROGRAMMING</p>
+      <div class="skill-items">
+        <span class="skill-pill">C</span>
+        <span class="skill-pill">C++</span>
+        <span class="skill-pill">C#</span>
+        <span class="skill-pill">Python</span>
+        <span class="skill-pill">PLC</span>
+        <span class="skill-pill">HTML</span>
         <span class="skill-pill dim">VHDL</span>
       </div>
     </div>
     <div class="skill-card scroll-reveal">
-      <p class="skill-card-label" data-en="SOFTWARE — ADVANCED" data-es="SOFTWARE — AVANZADO" data-de="SOFTWARE — FORTGESCHRITTEN">SOFTWARE — ADVANCED</p>
+      <p class="skill-card-label" data-en="VERSION CONTROL & PROJECT MANAGEMENT" data-es="CONTROL DE VERSIONES & GESTIÓN DE PROYECTOS" data-de="VERSIONSKONTROLLE & PROJEKTMANAGEMENT">VERSION CONTROL & PROJECT MANAGEMENT</p>
+      <div class="skill-items">
+        <span class="skill-pill">Git</span>
+        <span class="skill-pill">GitHub</span>
+        <span class="skill-pill">GitLab</span>
+        <span class="skill-pill">Sourcetree</span>
+        <span class="skill-pill">Trello</span>
+        <span class="skill-pill dim">Git LFS</span>
+      </div>
+    </div>
+    <div class="skill-card scroll-reveal">
+      <p class="skill-card-label" data-en="ROBOTICS SOFTWARE" data-es="SOFTWARE DE ROBÓTICA" data-de="ROBOTIK-SOFTWARE">ROBOTICS SOFTWARE</p>
       <div class="skill-items">
         <span class="skill-pill">Artiminds RPS</span>
         <span class="skill-pill">e-Series</span>
         <span class="skill-pill">CB3</span>
-        <span class="skill-pill">VS Code</span>
         <span class="skill-pill">Arduino</span>
         <span class="skill-pill">LabView</span>
-        <span class="skill-pill">Proteus</span>
-      </div>
-    </div>
-    <div class="skill-card scroll-reveal">
-      <p class="skill-card-label" data-en="SOFTWARE — BASIC" data-es="SOFTWARE — BÁSICO" data-de="SOFTWARE — GRUNDKENNTNISSE">SOFTWARE — BASIC</p>
-      <div class="skill-items">
-        <span class="skill-pill dim">Unity</span>
-        <span class="skill-pill dim">SolidWorks</span>
-        <span class="skill-pill dim">Matlab</span>
-        <span class="skill-pill dim">Xilinx</span>
-        <span class="skill-pill dim">FluidSIM</span>
+        <span class="skill-pill dim">Proteus</span>
       </div>
     </div>
     <div class="skill-card scroll-reveal">
@@ -673,15 +355,8 @@
         <span class="skill-pill" data-en="Adaptability" data-es="Adaptabilidad" data-de="Anpassungsfähigkeit">Adaptability</span>
         <span class="skill-pill" data-en="Teamwork" data-es="Trabajo en equipo" data-de="Teamarbeit">Teamwork</span>
         <span class="skill-pill" data-en="Leadership" data-es="Liderazgo" data-de="Führung">Leadership</span>
-        <span class="skill-pill" data-en="Resilience" data-es="Resiliencia" data-de="Resilienz">Resilience</span>
-      </div>
-    </div>
-    <div class="skill-card scroll-reveal">
-      <p class="skill-card-label" data-en="HARD SKILLS" data-es="HABILIDADES TÉCNICAS" data-de="TECHNISCHE FÄHIGKEITEN">HARD SKILLS</p>
-      <div class="skill-items">
-        <span class="skill-pill" data-en="Data Analysis" data-es="Análisis de datos" data-de="Datenanalyse">Data Analysis</span>
-        <span class="skill-pill" data-en="Proj. Mgmt" data-es="Gest. Proyectos" data-de="Projektmgmt.">Proj. Mgmt</span>
-        <span class="skill-pill" data-en="Programming" data-es="Programación" data-de="Programmierung">Programming</span>
+        <span class="skill-pill" data-en="Project Management" data-es="Gestión de Proyectos" data-de="Projektmanagement">Project Management</span>
+        <span class="skill-pill" data-en="Accountability" data-es="Responsabilidad" data-de="Verantwortungsbewusstsein">Accountability</span>
       </div>
     </div>
   </div>
@@ -693,108 +368,262 @@
 <section>
   <p class="section-label" data-en="04 // EDUCATION" data-es="04 // EDUCACIÓN" data-de="04 // AUSBILDUNG">04 // EDUCATION</p>
   <h2 class="section-title" data-en="Academic Background" data-es="Formación Académica" data-de="Akademischer Hintergrund">Academic Background</h2>
-
   <div class="edu-grid">
+
+    <div class="edu-card featured scroll-reveal">
+      <p class="edu-inst">Universidad Europea de Madrid</p>
+      <p class="edu-degree"
+         data-en="Master's — Video Game Design & Development"
+         data-es="Máster — Diseño y Desarrollo de Videojuegos"
+         data-de="Master — Videospieldesign & -entwicklung">Master's — Video Game Design & Development</p>
+      <p class="edu-period">2025 — 2026 · Madrid, España</p>
+    </div>
+
     <div class="edu-card scroll-reveal">
       <p class="edu-inst">Technische Hochschule Köln</p>
-      <p class="edu-degree" data-en="Exchange Program — Electronic Engineering / Cyber-Physical Systems" data-es="Programa de Intercambio — Ingeniería Electrónica / Sistemas Ciberfísicos" data-de="Austauschprogramm — Elektrotechnik / Cyber-Physische Systeme">Exchange Program — Electronic Engineering / Cyber-Physical Systems</p>
+      <p class="edu-degree"
+         data-en="Exchange Program — Electronic Engineering / Cyber-Physical Systems"
+         data-es="Programa de Intercambio — Ingeniería Electrónica / Sistemas Ciberfísicos"
+         data-de="Austauschprogramm — Elektrotechnik / Cyber-Physische Systeme">Exchange Program — Electronic Engineering / Cyber-Physical Systems</p>
       <p class="edu-period">2023 — 2024 · Cologne, Germany</p>
     </div>
+
     <div class="edu-card scroll-reveal">
       <p class="edu-inst">Instituto Tecnológico de Puebla</p>
-      <p class="edu-degree" data-en="Electronic Engineering — Specialty: Cyber-Physical Systems" data-es="Ingeniería Electrónica — Especialidad: Sistemas Ciberfísicos" data-de="Elektrotechnik — Spezialisierung: Cyber-Physische Systeme">Electronic Engineering — Specialty: Cyber-Physical Systems</p>
+      <p class="edu-degree"
+         data-en="Electronic Engineering — Specialty: Cyber-Physical Systems"
+         data-es="Ingeniería Electrónica — Especialidad: Sistemas Ciberfísicos"
+         data-de="Elektrotechnik — Spezialisierung: Cyber-Physische Systeme">Electronic Engineering — Specialty: Cyber-Physical Systems</p>
       <p class="edu-period">2018 — 2024 · Puebla, México</p>
     </div>
+
     <div class="edu-card scroll-reveal">
       <p class="edu-inst">C.E. Niños Héroes de Chapultepec</p>
-      <p class="edu-degree" data-en="High School — Exact Sciences" data-es="Preparatoria — Ciencias Exactas" data-de="Gymnasium — Exakte Wissenschaften">High School — Exact Sciences</p>
+      <p class="edu-degree"
+         data-en="High School — Exact Sciences"
+         data-es="Preparatoria — Ciencias Exactas"
+         data-de="Gymnasium — Exakte Wissenschaften">High School — Exact Sciences</p>
       <p class="edu-period">2015 — 2018 · Puebla, México</p>
     </div>
+
   </div>
 </section>
 
 <div class="divider"></div>
 
-<!-- COURSES -->
+<!-- MASTER SPECIALIZATIONS -->
+<div class="master-spec-section">
+  <p class="section-label" data-en="05 // MASTER'S SPECIALIZATIONS" data-es="05 // ESPECIALIZACIONES DEL MÁSTER" data-de="05 // MASTER-SPEZIALISIERUNGEN">05 // MASTER'S SPECIALIZATIONS</p>
+  <h2 class="section-title" data-en="Game Design Expertise" data-es="Experiencia en Diseño de Videojuegos" data-de="Spieledesign-Expertise">Game Design Expertise</h2>
+
+  <div class="master-intro">
+    <span class="master-intro-badge">UE MADRID · 2025–2026</span>
+    <p class="master-intro-text"
+       data-en="Developed throughout the <strong>Master's in Video Game Design & Development</strong> at Universidad Europea de Madrid. Each area represents hands-on, project-based expertise applied to real game productions."
+       data-es="Desarrolladas a lo largo del <strong>Máster en Diseño y Desarrollo de Videojuegos</strong> de la Universidad Europea de Madrid. Cada área representa experiencia práctica basada en proyectos reales."
+       data-de="Im Rahmen des <strong>Masterstudiums</strong> an der Universidad Europea de Madrid entwickelt. Jeder Bereich steht für projektbasierte Expertise in realen Spielproduktionen.">Developed throughout the <strong>Master's in Video Game Design & Development</strong> at Universidad Europea de Madrid. Each area represents hands-on, project-based expertise applied to real game productions.</p>
+  </div>
+
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('theory', event)" data-en="Design Theory" data-es="Teoría de Diseño" data-de="Designtheorie">Design Theory</button>
+    <button class="tab-btn" onclick="switchTab('engines', event)" data-en="Engines & Tools" data-es="Motores & Herramientas" data-de="Engines & Tools">Engines & Tools</button>
+    <button class="tab-btn" onclick="switchTab('levels', event)" data-en="Level Design" data-es="Diseño de Niveles" data-de="Level Design">Level Design</button>
+    <button class="tab-btn" onclick="switchTab('ux', event)" data-en="UX & Interfaces" data-es="UX e Interfaces" data-de="UX & Interfaces">UX & Interfaces</button>
+    <button class="tab-btn" onclick="switchTab('f2p', event)" data-en="F2P & Mobile" data-es="F2P & Móvil" data-de="F2P & Mobil">F2P & Mobile</button>
+    <button class="tab-btn" onclick="switchTab('gameplay', event)" data-en="Gameplay & Proto" data-es="Gameplay & Proto" data-de="Gameplay & Proto">Gameplay & Proto</button>
+  </div>
+
+  <div class="tab-panels">
+
+    <!-- THEORY -->
+    <div class="tab-panel active" id="panel-theory">
+      <div class="panel-header">
+        <div class="panel-icon">[§]</div>
+        <div>
+          <p class="panel-title" data-en="Design Theory" data-es="Teoría del Diseño" data-de="Designtheorie">Design Theory</p>
+          <p class="panel-subtitle">DOCUMENTATION · METHODOLOGY · COMMUNICATION</p>
+        </div>
+      </div>
+      <p class="panel-desc"
+         data-en="Mastery of the complete game design documentation pipeline — from the high-concept One Pager to the comprehensive Game Design Document. The One Pager captures the essence of the concept with clarity and focus; the Ten Pager structures the creative vision and core mechanics in detail; full GDDs cover systems, economy, progression, and tone; and Level Design Documents map every spatial and interaction blueprint. Flow diagrams are used to chart system logic, player decision trees, and state transitions. Every deliverable is built to communicate vision effectively to teams, stakeholders, and production pipelines."
+         data-es="Dominio del pipeline completo de documentación de diseño de videojuegos — desde el One Pager de alto concepto hasta el GDD integral. El One Pager captura la esencia del concepto con claridad; el Ten Pager estructura la visión creativa y las mecánicas centrales en detalle; los GDDs cubren sistemas, economía, progresión y tono; y los LDDs mapean los planos espaciales e interactivos. Los diagramas de flujo articulan la lógica de sistemas, árboles de decisión del jugador y transiciones de estados."
+         data-de="Beherrschung der vollständigen Dokumentations-Pipeline — vom One Pager bis zum GDD. Der One Pager erfasst das Konzept präzise; der Ten Pager strukturiert die kreative Vision; GDDs decken Systeme, Wirtschaft, Progression und Ton ab; LDDs kartieren räumliche Blaupausen. Flussdiagramme bilden Systemlogik, Entscheidungsbäume und Zustandsübergänge ab.">Mastery of the complete game design documentation pipeline — from the high-concept One Pager to the comprehensive Game Design Document. The One Pager captures the essence of the concept with clarity and focus; the Ten Pager structures the creative vision and core mechanics in detail; full GDDs cover systems, economy, progression, and tone; and Level Design Documents map every spatial and interaction blueprint. Flow diagrams are used to chart system logic, player decision trees, and state transitions. Every deliverable is built to communicate vision effectively to teams, stakeholders, and production pipelines.</p>
+      <p class="comp-label">COMPETENCIES</p>
+      <div class="comp-tags">
+        <span class="comp-tag">One Pager</span>
+        <span class="comp-tag">Ten Pager</span>
+        <span class="comp-tag">GDD</span>
+        <span class="comp-tag">LDD</span>
+        <span class="comp-tag" data-en="Flow Diagrams" data-es="Diagramas de Flujo" data-de="Flussdiagramme">Flow Diagrams</span>
+        <span class="comp-tag" data-en="Systems Design" data-es="Diseño de Sistemas" data-de="Systemdesign">Systems Design</span>
+        <span class="comp-tag" data-en="Game Economy" data-es="Economía de Juego" data-de="Spielwirtschaft">Game Economy</span>
+        <span class="comp-tag" data-en="Progression Design" data-es="Diseño de Progresión" data-de="Progressionsdesign">Progression Design</span>
+      </div>
+    </div>
+
+    <!-- ENGINES -->
+    <div class="tab-panel" id="panel-engines">
+      <div class="panel-header">
+        <div class="panel-icon">[⚙]</div>
+        <div>
+          <p class="panel-title" data-en="Engines & Dev Tools" data-es="Motores y Herramientas" data-de="Engines & Entwicklungstools">Engines & Dev Tools</p>
+          <p class="panel-subtitle">UNITY · UNREAL · VERSION CONTROL · TEAM WORKFLOW</p>
+        </div>
+      </div>
+      <p class="panel-desc"
+         data-en="Deep, production-level command of both Unity and Unreal Engine — integrating complex features, scripting gameplay systems, and managing full project pipelines. Collaborative development through GitLab, GitHub, and Sourcetree with Git LFS for heavy asset management. Project planning and task distribution via Trello. Operates effectively as both a solo developer and within multidisciplinary teams across shared repositories."
+         data-es="Dominio profundo a nivel de producción de Unity y Unreal Engine — integrando features complejas, desarrollando sistemas de gameplay y gestionando pipelines completos. Desarrollo colaborativo con GitLab, GitHub y Sourcetree, con Git LFS para assets de gran tamaño. Planificación con Trello. Efectivo como desarrollador individual y en equipos multidisciplinarios."
+         data-de="Tiefgreifende Beherrschung von Unity und Unreal Engine. Kollaborative Workflows mit GitLab, GitHub, Sourcetree und Git LFS. Projektplanung mit Trello. Effektiv als Solo-Entwickler und in multidisziplinären Teams.">Deep, production-level command of both Unity and Unreal Engine — integrating complex features, scripting gameplay systems, and managing full project pipelines. Collaborative development through GitLab, GitHub, and Sourcetree with Git LFS for heavy asset management. Project planning and task distribution via Trello. Operates effectively as both a solo developer and within multidisciplinary teams across shared repositories.</p>
+      <p class="comp-label">COMPETENCIES</p>
+      <div class="comp-tags">
+        <span class="comp-tag tool">Unity</span>
+        <span class="comp-tag tool">Unreal Engine</span>
+        <span class="comp-tag tool">GitLab</span>
+        <span class="comp-tag tool">GitHub</span>
+        <span class="comp-tag tool">Sourcetree</span>
+        <span class="comp-tag tool">Git LFS</span>
+        <span class="comp-tag tool">Trello</span>
+        <span class="comp-tag" data-en="Feature Integration" data-es="Integración de Features" data-de="Feature-Integration">Feature Integration</span>
+        <span class="comp-tag" data-en="Team Collaboration" data-es="Colaboración en Equipo" data-de="Teamzusammenarbeit">Team Collaboration</span>
+      </div>
+    </div>
+
+    <!-- LEVELS -->
+    <div class="tab-panel" id="panel-levels">
+      <div class="panel-header">
+        <div class="panel-icon">[◱]</div>
+        <div>
+          <p class="panel-title" data-en="Level Design" data-es="Diseño de Niveles" data-de="Level Design">Level Design</p>
+          <p class="panel-subtitle">2D · 3D · LAYOUT · BLOCKOUT · ATMOSPHERE</p>
+        </div>
+      </div>
+      <p class="panel-desc"
+         data-en="End-to-end level design process for both 2D and 3D environments — from initial layout sketches through engine blockouts to full atmospheric dressing. Spatial iteration using POV testing and dimensional calibration to ensure the player experience reads as intended. Moodboards to establish visual and emotional tone before production begins. Beat charts to map gameplay intensity and pacing across every location, ensuring deliberate emotional arcs through play."
+         data-es="Proceso completo de diseño de niveles para entornos 2D y 3D — desde bocetos de layout iniciales hasta maquetas en motor y vestido atmosférico final. Iteración espacial mediante pruebas de POV y calibración de dimensiones. Moodboards para el tono visual y emocional. Beat charts para mapear la intensidad del gameplay y el ritmo en cada locación."
+         data-de="End-to-End Level-Design für 2D- und 3D-Umgebungen. Räumliche Iteration mit POV-Tests. Moodboards für visuellen Ton. Beat Charts zur Kartierung von Gameplay-Intensität und Pacing.">End-to-end level design process for both 2D and 3D environments — from initial layout sketches through engine blockouts to full atmospheric dressing. Spatial iteration using POV testing and dimensional calibration to ensure the player experience reads as intended. Moodboards to establish visual and emotional tone before production begins. Beat charts to map gameplay intensity and pacing across every location, ensuring deliberate emotional arcs through play.</p>
+      <p class="comp-label">COMPETENCIES</p>
+      <div class="comp-tags">
+        <span class="comp-tag" data-en="2D Level Design" data-es="Diseño de Niveles 2D" data-de="2D Level Design">2D Level Design</span>
+        <span class="comp-tag" data-en="3D Level Design" data-es="Diseño de Niveles 3D" data-de="3D Level Design">3D Level Design</span>
+        <span class="comp-tag">Layout</span>
+        <span class="comp-tag">Blockout</span>
+        <span class="comp-tag">Moodboard</span>
+        <span class="comp-tag">Beat Chart</span>
+        <span class="comp-tag" data-en="POV Testing" data-es="Pruebas de POV" data-de="POV-Tests">POV Testing</span>
+        <span class="comp-tag" data-en="Pacing Design" data-es="Diseño de Ritmo" data-de="Pacing-Design">Pacing Design</span>
+        <span class="comp-tag" data-en="Atmosphere & Dressing" data-es="Ambientación" data-de="Atmosphäre">Atmosphere & Dressing</span>
+      </div>
+    </div>
+
+    <!-- UX -->
+    <div class="tab-panel" id="panel-ux">
+      <div class="panel-header">
+        <div class="panel-icon">[◧]</div>
+        <div>
+          <p class="panel-title" data-en="UX & Interface Design" data-es="UX e Interfaces" data-de="UX & Interface-Design">UX & Interface Design</p>
+          <p class="panel-subtitle">MENUS · HUD · FLOW · FIGMA · LEITMOTIV</p>
+        </div>
+      </div>
+      <p class="panel-desc"
+         data-en="Full-spectrum UI/UX design for games — covering every screen and interface that defines the player journey before, during, and after gameplay. Menus, HUDs, and transitions crafted with a cohesive leitmotiv: aligning audio, typography, color, and visual language to the game's identity and target audience. Screen flow prototyping in Figma, including multi-resolution design for diverse platforms. Every interface decision is driven by clarity, immersion, and the emotional tone the game demands."
+         data-es="Diseño UI/UX de espectro completo para videojuegos — cada pantalla e interfaz que define el recorrido del jugador antes, durante y después del gameplay. Menús, HUDs y transiciones con un leitmotiv cohesivo: audio, tipografía, color y lenguaje visual alineados con la identidad del juego. Prototipado de flujo de pantallas en Figma para múltiples resoluciones y plataformas."
+         data-de="Vollständiges UI/UX-Design für Spiele. Menüs, HUDs und Übergänge mit kohärentem Leitmotiv. Screen-Flow-Prototyping in Figma für verschiedene Auflösungen und Plattformen.">Full-spectrum UI/UX design for games — covering every screen and interface that defines the player journey before, during, and after gameplay. Menus, HUDs, and transitions crafted with a cohesive leitmotiv: aligning audio, typography, color, and visual language to the game's identity and target audience. Screen flow prototyping in Figma, including multi-resolution design for diverse platforms. Every interface decision is driven by clarity, immersion, and the emotional tone the game demands.</p>
+      <p class="comp-label">COMPETENCIES</p>
+      <div class="comp-tags">
+        <span class="comp-tag tool">Figma</span>
+        <span class="comp-tag">HUD Design</span>
+        <span class="comp-tag" data-en="Menu Systems" data-es="Sistemas de Menú" data-de="Menüsysteme">Menu Systems</span>
+        <span class="comp-tag" data-en="Screen Flow" data-es="Flujo de Pantallas" data-de="Screen Flow">Screen Flow</span>
+        <span class="comp-tag">Leitmotiv</span>
+        <span class="comp-tag" data-en="Multi-resolution" data-es="Multi-resolución" data-de="Multi-Auflösung">Multi-resolution</span>
+        <span class="comp-tag" data-en="Typography" data-es="Tipografía" data-de="Typografie">Typography</span>
+        <span class="comp-tag" data-en="Audio UX" data-es="UX de Audio" data-de="Audio UX">Audio UX</span>
+      </div>
+    </div>
+
+    <!-- F2P -->
+    <div class="tab-panel" id="panel-f2p">
+      <div class="panel-header">
+        <div class="panel-icon">[♾]</div>
+        <div>
+          <p class="panel-title" data-en="F2P, Multiplayer & Mobile" data-es="F2P, Multijugador y Móvil" data-de="F2P, Multiplayer & Mobile">F2P, Multiplayer & Mobile</p>
+          <p class="panel-subtitle">RETENTION · ECONOMY · SOCIAL MECHANICS · KPIs</p>
+        </div>
+      </div>
+      <p class="panel-desc"
+         data-en="In-depth knowledge of the design systems that drive success in mobile, multiplayer, and Free-to-Play games — from retention loops and social mechanics to in-game economies built for long-term engagement. Fluency in F2P KPIs: DAU, MAU, ARPU, LTV, churn rate, and how to design features with these metrics at the center. Applied analysis of market-leading titles to decode onboarding flows, premium content strategies, and the mechanics that make players stay."
+         data-es="Conocimiento profundo de los sistemas de diseño que impulsan el éxito en juegos F2P, multijugador y móviles — desde loops de retención y mecánicas sociales hasta economías de juego para el compromiso a largo plazo. Fluidez en KPIs de F2P: DAU, MAU, ARPU, LTV, tasa de abandono. Análisis aplicado de títulos líderes del mercado para descifrar onboarding, estrategias de contenido premium y mecánicas de retención."
+         data-de="Tiefgehendes Wissen über Erfolgssysteme in F2P-, Multiplayer- und Mobile-Spielen. Retention-Loops, soziale Mechaniken, Spielwirtschaft. F2P-KPIs: DAU, MAU, ARPU, LTV, Churn Rate. Angewandte Analyse marktführender Titel.">In-depth knowledge of the design systems that drive success in mobile, multiplayer, and Free-to-Play games — from retention loops and social mechanics to in-game economies built for long-term engagement. Fluency in F2P KPIs: DAU, MAU, ARPU, LTV, churn rate, and how to design features with these metrics at the center. Applied analysis of market-leading titles to decode onboarding flows, premium content strategies, and the mechanics that make players stay.</p>
+      <p class="comp-label">COMPETENCIES</p>
+      <div class="comp-tags">
+        <span class="comp-tag" data-en="Retention Design" data-es="Diseño de Retención" data-de="Retention-Design">Retention Design</span>
+        <span class="comp-tag" data-en="Social Mechanics" data-es="Mecánicas Sociales" data-de="Soziale Mechaniken">Social Mechanics</span>
+        <span class="comp-tag" data-en="Game Economy" data-es="Economía de Juego" data-de="Spielwirtschaft">Game Economy</span>
+        <span class="comp-tag">DAU / MAU</span>
+        <span class="comp-tag">ARPU / LTV</span>
+        <span class="comp-tag" data-en="KPI Design" data-es="Diseño de KPIs" data-de="KPI-Design">KPI Design</span>
+        <span class="comp-tag" data-en="Onboarding Flow" data-es="Flujo de Onboarding" data-de="Onboarding-Flow">Onboarding Flow</span>
+        <span class="comp-tag" data-en="Monetization" data-es="Monetización" data-de="Monetarisierung">Monetization</span>
+        <span class="comp-tag" data-en="Mobile Design" data-es="Diseño Móvil" data-de="Mobile Design">Mobile Design</span>
+      </div>
+    </div>
+
+    <!-- GAMEPLAY -->
+    <div class="tab-panel" id="panel-gameplay">
+      <div class="panel-header">
+        <div class="panel-icon">[▶]</div>
+        <div>
+          <p class="panel-title" data-en="Gameplay & Prototyping" data-es="Gameplay y Prototipado" data-de="Gameplay & Prototyping">Gameplay & Prototyping</p>
+          <p class="panel-subtitle">BLUEPRINTS · AI · COMBAT · ANIMATION · CAMERAS</p>
+        </div>
+      </div>
+      <p class="panel-desc"
+         data-en="Advanced gameplay implementation using Unreal Engine Blueprints — building complex interactive systems where multiple game elements interact in real time. Full character animation pipelines, combat system architecture with combos and input-mapped actions (jump, crouch, sprint, attack, dodge, dance). Camera system implementation across multiple perspectives: static isometric, first-person, and third-person. AI-driven enemy behavior using NavMesh for intelligent navigation and dynamic responses. All approaches are engine-agnostic and transferable to Unity."
+         data-es="Implementación avanzada de gameplay con Blueprints de Unreal Engine — sistemas interactivos complejos con múltiples elementos en tiempo real. Pipelines completos de animación de personajes, arquitectura de sistemas de combate con combos e inputs mapeados (saltar, agacharse, sprint, atacar, esquivar, bailar). Sistemas de cámara en múltiples perspectivas: isométrica estática, primera y tercera persona. IA de enemigos con NavMesh. Todos los enfoques son transferibles a Unity."
+         data-de="Fortgeschrittene Gameplay-Implementierung mit UE Blueprints. Animations-Pipelines, Kampfsystemarchitektur mit Combos und Input-Mapping. Kamerasysteme in mehreren Perspektiven. KI-Feindverhalten mit NavMesh. Auf Unity übertragbar.">Advanced gameplay implementation using Unreal Engine Blueprints — building complex interactive systems where multiple game elements interact in real time. Full character animation pipelines, combat system architecture with combos and input-mapped actions (jump, crouch, sprint, attack, dodge, dance). Camera system implementation across multiple perspectives: static isometric, first-person, and third-person. AI-driven enemy behavior using NavMesh for intelligent navigation and dynamic responses. All approaches are engine-agnostic and transferable to Unity.</p>
+      <p class="comp-label">COMPETENCIES</p>
+      <div class="comp-tags">
+        <span class="comp-tag tool">Blueprints (UE)</span>
+        <span class="comp-tag" data-en="Character Animation" data-es="Animación de Personajes" data-de="Charakter-Animation">Character Animation</span>
+        <span class="comp-tag" data-en="Combat Systems" data-es="Sistemas de Combate" data-de="Kampfsysteme">Combat Systems</span>
+        <span class="comp-tag" data-en="Input Mapping" data-es="Mapeo de Inputs" data-de="Input-Mapping">Input Mapping</span>
+        <span class="comp-tag" data-en="Isometric Camera" data-es="Cámara Isométrica" data-de="Isometrische Kamera">Isometric Camera</span>
+        <span class="comp-tag" data-en="FPS / TPS Camera" data-es="Cámara 1a / 3a persona" data-de="Ego / 3rd-Person-Kamera">FPS / TPS Camera</span>
+        <span class="comp-tag">NavMesh AI</span>
+        <span class="comp-tag" data-en="Combo Systems" data-es="Sistemas de Combos" data-de="Combo-Systeme">Combo Systems</span>
+        <span class="comp-tag" data-en="Rapid Prototyping" data-es="Prototipado Rápido" data-de="Rapid Prototyping">Rapid Prototyping</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- CERTIFICATIONS -->
 <section>
-  <p class="section-label" data-en="05 // CERTIFICATIONS" data-es="05 // CERTIFICACIONES" data-de="05 // ZERTIFIKATE">05 // CERTIFICATIONS</p>
+  <p class="section-label" data-en="06 // CERTIFICATIONS" data-es="06 // CERTIFICACIONES" data-de="06 // ZERTIFIKATE">06 // CERTIFICATIONS</p>
   <h2 class="section-title" data-en="Courses & Certs" data-es="Cursos y Certificados" data-de="Kurse & Zertifikate">Courses & Certs</h2>
-
   <div class="list-items">
-    <div class="list-item scroll-reveal">
-      <span class="list-item-icon">[★]</span>
-      <div>
-        <strong data-en="Certified Associate Project Manager (CAPM)" data-es="Gerente de Proyectos Asociado Certificado (CAPM)" data-de="Zertifizierter assoziierter Projektmanager (CAPM)">Certified Associate Project Manager (CAPM)</strong>
-        <span data-en="Project Management Institute · In progress" data-es="Project Management Institute · En curso" data-de="Project Management Institute · In Bearbeitung">Project Management Institute · In progress</span>
-      </div>
-    </div>
-    <div class="list-item scroll-reveal">
-      <span class="list-item-icon">[✓]</span>
-      <div>
-        <strong data-en="Artiminds RPS Software Certification" data-es="Certificación de Software Artiminds RPS" data-de="Artiminds RPS Software-Zertifizierung">Artiminds RPS Software Certification</strong>
-        <span data-en="ArtiMinds Robotics, Germany · Sponsored by Volkswagen AG · 2024" data-es="ArtiMinds Robotics, Alemania · Patrocinado por Volkswagen AG · 2024" data-de="ArtiMinds Robotics, Deutschland · Gesponsert von Volkswagen AG · 2024">ArtiMinds Robotics, Germany · Sponsored by Volkswagen AG · 2024</span>
-      </div>
-    </div>
-    <div class="list-item scroll-reveal">
-      <span class="list-item-icon">[✓]</span>
-      <div>
-        <strong data-en="Universal Robots Certification (e-Series & CB3)" data-es="Certificación Universal Robots (e-Series & CB3)" data-de="Universal Robots Zertifizierung (e-Series & CB3)">Universal Robots Certification (e-Series & CB3)</strong>
-        <span data-en="Universal Robots, Germany · Sponsored by Volkswagen AG · 2024" data-es="Universal Robots, Alemania · Patrocinado por Volkswagen AG · 2024" data-de="Universal Robots, Deutschland · Gesponsert von Volkswagen AG · 2024">Universal Robots, Germany · Sponsored by Volkswagen AG · 2024</span>
-      </div>
-    </div>
-    <div class="list-item scroll-reveal">
-      <span class="list-item-icon">[✓]</span>
-      <div>
-        <strong data-en="Video Game Design & Development" data-es="Diseño y Desarrollo de Videojuegos" data-de="Videospieldesign & -entwicklung">Video Game Design & Development</strong>
-        <span data-en="EBAC, México · 2022" data-es="EBAC, México · 2022" data-de="EBAC, Mexiko · 2022">EBAC, México · 2022</span>
-      </div>
-    </div>
-    <div class="list-item scroll-reveal">
-      <span class="list-item-icon">[✓]</span>
-      <div>
-        <strong data-en="LabView Software Course" data-es="Curso de Software LabView" data-de="LabView Software-Kurs">LabView Software Course</strong>
-        <span data-en="National Institute of Astrophysics, Optics & Electronics, México · 2020" data-es="Instituto Nacional de Astrofísica, Óptica y Electrónica, México · 2020" data-de="Nationales Institut für Astrophysik, Optik & Elektronik, Mexiko · 2020">National Institute of Astrophysics, Optics & Electronics, México · 2020</span>
-      </div>
-    </div>
+    <div class="list-item scroll-reveal"><span class="list-item-icon">[★]</span><div><strong data-en="Certified Associate Project Manager (CAPM)" data-es="Certified Associate Project Manager (CAPM)" data-de="Certified Associate Project Manager (CAPM)">Certified Associate Project Manager (CAPM)</strong><span data-en="Project Management Institute · In progress" data-es="Project Management Institute · En curso" data-de="Project Management Institute · In Bearbeitung">Project Management Institute · In progress</span></div></div>
+    <div class="list-item scroll-reveal"><span class="list-item-icon">[✓]</span><div><strong data-en="Artiminds RPS Software Certification" data-es="Certificación de Software Artiminds RPS" data-de="Artiminds RPS Software-Zertifizierung">Artiminds RPS Software Certification</strong><span data-en="ArtiMinds Robotics, Germany · Sponsored by Volkswagen AG · 2024" data-es="ArtiMinds Robotics, Alemania · Patrocinado por Volkswagen AG · 2024" data-de="ArtiMinds Robotics, Deutschland · Gesponsert von Volkswagen AG · 2024">ArtiMinds Robotics, Germany · Sponsored by Volkswagen AG · 2024</span></div></div>
+    <div class="list-item scroll-reveal"><span class="list-item-icon">[✓]</span><div><strong data-en="Universal Robots Certification (e-Series & CB3)" data-es="Certificación Universal Robots (e-Series & CB3)" data-de="Universal Robots Zertifizierung (e-Series & CB3)">Universal Robots Certification (e-Series & CB3)</strong><span data-en="Universal Robots, Germany · Sponsored by Volkswagen AG · 2024" data-es="Universal Robots, Alemania · Patrocinado por Volkswagen AG · 2024" data-de="Universal Robots, Deutschland · Gesponsert von Volkswagen AG · 2024">Universal Robots, Germany · Sponsored by Volkswagen AG · 2024</span></div></div>
+    <div class="list-item scroll-reveal"><span class="list-item-icon">[✓]</span><div><strong data-en="Video Game Design & Development" data-es="Diseño y Desarrollo de Videojuegos" data-de="Videospieldesign & -entwicklung">Video Game Design & Development</strong><span data-en="EBAC, México · 2022" data-es="EBAC, México · 2022" data-de="EBAC, Mexiko · 2022">EBAC, México · 2022</span></div></div>
+    <div class="list-item scroll-reveal"><span class="list-item-icon">[✓]</span><div><strong data-en="LabView Software Course" data-es="Curso de Software LabView" data-de="LabView Software-Kurs">LabView Software Course</strong><span data-en="National Institute of Astrophysics, Optics & Electronics, México · 2020" data-es="Instituto Nacional de Astrofísica, Óptica y Electrónica, México · 2020" data-de="Nationales Institut für Astrophysik, Optik & Elektronik, Mexiko · 2020">National Institute of Astrophysics, Optics & Electronics, México · 2020</span></div></div>
   </div>
 </section>
 
 <div class="divider"></div>
 
-<!-- ACADEMIC -->
+<!-- ACHIEVEMENTS -->
 <section>
-  <p class="section-label" data-en="06 // ACHIEVEMENTS" data-es="06 // LOGROS" data-de="06 // LEISTUNGEN">06 // ACHIEVEMENTS</p>
+  <p class="section-label" data-en="07 // ACHIEVEMENTS" data-es="07 // LOGROS" data-de="07 // LEISTUNGEN">07 // ACHIEVEMENTS</p>
   <h2 class="section-title" data-en="Academic Participations" data-es="Participaciones Académicas" data-de="Akademische Teilnahmen">Academic Participations</h2>
-
   <div class="list-items">
-    <div class="list-item scroll-reveal">
-      <span class="list-item-icon">[◈]</span>
-      <div>
-        <strong data-en="KOSPIE – DAAD Exchange Program" data-es="Programa de Intercambio KOSPIE – DAAD" data-de="KOSPIE – DAAD Austauschprogramm">KOSPIE – DAAD Exchange Program</strong>
-        <span>2023 — 2024</span>
-      </div>
-    </div>
-    <div class="list-item scroll-reveal">
-      <span class="list-item-icon">[◈]</span>
-      <div>
-        <strong data-en="CANSAT 2023 — Iberoamerican Satellite Contest" data-es="CANSAT 2023 — Concurso Iberoamericano de Satélites" data-de="CANSAT 2023 — Iberoamerikanischer Satellitenwettbewerb">CANSAT 2023 — Iberoamerican Satellite Contest</strong>
-        <span data-en="21st place out of 82 teams" data-es="Lugar 21 de 82 equipos" data-de="21. Platz von 82 Teams">21st place out of 82 teams</span>
-      </div>
-    </div>
-    <div class="list-item scroll-reveal">
-      <span class="list-item-icon">[◈]</span>
-      <div>
-        <strong data-en="ROBOTEC 2022 — Line Tracker Contest" data-es="ROBOTEC 2022 — Concurso de Seguidor de Línea" data-de="ROBOTEC 2022 — Linienverfolgungswettbewerb">ROBOTEC 2022 — Line Tracker Contest</strong>
-        <span data-en="Participant" data-es="Participante" data-de="Teilnehmer">Participant</span>
-      </div>
-    </div>
-    <div class="list-item scroll-reveal">
-      <span class="list-item-icon">[◈]</span>
-      <div>
-        <strong data-en="Technological Innovation Competition" data-es="Concurso de Innovación Tecnológica" data-de="Technologischer Innovationswettbewerb">Technological Innovation Competition</strong>
-        <span data-en="Participant · 2019" data-es="Participante · 2019" data-de="Teilnehmer · 2019">Participant · 2019</span>
-      </div>
-    </div>
+    <div class="list-item scroll-reveal"><span class="list-item-icon">[◈]</span><div><strong data-en="KOSPIE – DAAD Exchange Program" data-es="Programa de Intercambio KOSPIE – DAAD" data-de="KOSPIE – DAAD Austauschprogramm">KOSPIE – DAAD Exchange Program</strong><span>2023 — 2024</span></div></div>
+    <div class="list-item scroll-reveal"><span class="list-item-icon">[◈]</span><div><strong data-en="CANSAT 2023 — Iberoamerican Satellite Contest" data-es="CANSAT 2023 — Concurso Iberoamericano de Satélites" data-de="CANSAT 2023 — Iberoamerikanischer Satellitenwettbewerb">CANSAT 2023 — Iberoamerican Satellite Contest</strong><span data-en="21st place out of 82 teams" data-es="Lugar 21 de 82 equipos" data-de="21. Platz von 82 Teams">21st place out of 82 teams</span></div></div>
+    <div class="list-item scroll-reveal"><span class="list-item-icon">[◈]</span><div><strong data-en="ROBOTEC 2022 — Line Tracker Contest" data-es="ROBOTEC 2022 — Concurso de Seguidor de Línea" data-de="ROBOTEC 2022 — Linienverfolgungswettbewerb">ROBOTEC 2022 — Line Tracker Contest</strong><span data-en="Participant" data-es="Participante" data-de="Teilnehmer">Participant</span></div></div>
+    <div class="list-item scroll-reveal"><span class="list-item-icon">[◈]</span><div><strong data-en="Technological Innovation Competition" data-es="Concurso de Innovación Tecnológica" data-de="Technologischer Innovationswettbewerb">Technological Innovation Competition</strong><span data-en="Participant · 2019" data-es="Participante · 2019" data-de="Teilnehmer · 2019">Participant · 2019</span></div></div>
   </div>
 </section>
 
@@ -802,22 +631,12 @@
 
 <!-- LANGUAGES -->
 <section>
-  <p class="section-label" data-en="07 // LANGUAGES" data-es="07 // IDIOMAS" data-de="07 // SPRACHEN">07 // LANGUAGES</p>
+  <p class="section-label" data-en="08 // LANGUAGES" data-es="08 // IDIOMAS" data-de="08 // SPRACHEN">08 // LANGUAGES</p>
   <h2 class="section-title" data-en="Multilingual" data-es="Multilingüe" data-de="Mehrsprachig">Multilingual</h2>
-
   <div class="lang-grid">
-    <div class="lang-card scroll-reveal">
-      <p class="lang-name" data-en="Spanish" data-es="Español" data-de="Spanisch">Spanish</p>
-      <p class="lang-level" data-en="NATIVE" data-es="NATIVO" data-de="MUTTERSPRACHE">NATIVE</p>
-    </div>
-    <div class="lang-card scroll-reveal">
-      <p class="lang-name" data-en="English" data-es="Inglés" data-de="Englisch">English</p>
-      <p class="lang-level">C1 · TOEFL ITP</p>
-    </div>
-    <div class="lang-card scroll-reveal">
-      <p class="lang-name" data-en="German" data-es="Alemán" data-de="Deutsch">German</p>
-      <p class="lang-level">B2 · IIK</p>
-    </div>
+    <div class="lang-card scroll-reveal"><p class="lang-name" data-en="Spanish" data-es="Español" data-de="Spanisch">Spanish</p><p class="lang-level" data-en="NATIVE" data-es="NATIVO" data-de="MUTTERSPRACHE">NATIVE</p></div>
+    <div class="lang-card scroll-reveal"><p class="lang-name" data-en="English" data-es="Inglés" data-de="Englisch">English</p><p class="lang-level">C1 · TOEFL ITP</p></div>
+    <div class="lang-card scroll-reveal"><p class="lang-name" data-en="German" data-es="Alemán" data-de="Deutsch">German</p><p class="lang-level">B2 · IIK</p></div>
   </div>
 </section>
 
@@ -825,45 +644,66 @@
 
 <!-- CONTACT -->
 <section>
-  <p class="section-label" data-en="08 // CONTACT" data-es="08 // CONTACTO" data-de="08 // KONTAKT">08 // CONTACT</p>
+  <p class="section-label" data-en="09 // CONTACT" data-es="09 // CONTACTO" data-de="09 // KONTAKT">09 // CONTACT</p>
   <h2 class="section-title" data-en="Get in Touch" data-es="Contáctame" data-de="Kontakt aufnehmen">Get in Touch</h2>
-
   <div class="contact-bar">
     <a href="mailto:axelcastor2000@hotmail.com" class="contact-item">
       <span class="icon">✉</span> axelcastor2000@hotmail.com
     </a>
-    <a href="tel:2227637007" class="contact-item">
-      <span class="icon">✆</span> 222 763 7007
+    <a href="tel:+522227637007" class="contact-item">
+      <span class="icon">✆</span> +52 222 763 7007
     </a>
     <span class="contact-item">
       <span class="icon">◎</span> Puebla, México
     </span>
   </div>
+  <div class="relocation-note">
+    <span class="relocation-dot"></span>
+    <span data-en="Open to relocation worldwide" data-es="Disponible para reubicación a nivel mundial" data-de="Offen für weltweiten Umzug">Open to relocation worldwide</span>
+  </div>
 </section>
 
 <!-- FOOTER -->
 <footer>
-  <span>AXEL CASTORENA RIVERA · ELECTRONIC ENGINEER</span>
+  <span>AXEL CASTORENA RIVERA · GAME DESIGNER & ELECTRONIC ENGINEER</span>
   <span class="blink">▮</span>
 </footer>
 
 <script>
-  // ─── LANGUAGE TOGGLE ───
   let currentLang = 'en';
 
   function setLang(lang) {
     currentLang = lang;
-    document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+    document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
     document.querySelector(`.lang-btn[onclick="setLang('${lang}')"]`).classList.add('active');
-
     document.querySelectorAll('[data-' + lang + ']').forEach(el => {
-      el.textContent = el.getAttribute('data-' + lang);
+      const val = el.getAttribute('data-' + lang);
+      if (val !== null) el.innerHTML = val;
     });
   }
 
-  // ─── SCROLL REVEAL ───
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry, i) => {
+  function switchTab(id, e) {
+    if (e) e.stopPropagation();
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.getElementById('panel-' + id).classList.add('active');
+    if (e && e.currentTarget) e.currentTarget.classList.add('active');
+  }
+
+  function loadImage(input) {
+    const file = input.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = e => {
+      const ph = input.closest('.img-placeholder');
+      ph.querySelector('img').src = e.target.result;
+      ph.classList.add('has-image');
+    };
+    reader.readAsDataURL(file);
+  }
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
       if (entry.isIntersecting) {
         setTimeout(() => entry.target.classList.add('visible'), 80);
         observer.unobserve(entry.target);
@@ -873,7 +713,6 @@
 
   document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
 
-  // Init
   setLang('en');
 </script>
 </body>
