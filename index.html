@@ -172,6 +172,34 @@
   .img-placeholder.has-image img { display: block; }
   .ph-icon { font-size: 1rem; }
 
+  /* DOC CARDS */
+  .doc-cards-label { font-family: var(--mono); font-size: 0.6rem; color: var(--accent); letter-spacing: 0.2em; margin: 1.8rem 0 0.9rem; }
+  .doc-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+  .doc-card { background: var(--surface2); border: 1px solid var(--border); border-radius: 6px; overflow: hidden; transition: border-color 0.2s, transform 0.2s; }
+  .doc-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .doc-card-preview { width: 100%; aspect-ratio: 4/3; object-fit: cover; object-position: top; display: block; border-bottom: 1px solid var(--border); background: var(--surface); }
+  .doc-card-body { padding: 0.85rem; }
+  .doc-card-type { font-family: var(--mono); font-size: 0.58rem; color: var(--accent); letter-spacing: 0.15em; margin-bottom: 0.3rem; }
+  .doc-card-title { font-family: var(--display); font-size: 0.82rem; font-weight: 600; color: var(--text); margin-bottom: 0.25rem; line-height: 1.3; }
+  .doc-card-sub { font-size: 0.72rem; color: var(--muted); margin-bottom: 0.75rem; line-height: 1.4; }
+  .doc-card-btn { display: inline-flex; align-items: center; gap: 0.4rem; font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.1em; color: var(--accent); border: 1px solid rgba(200,245,66,0.3); border-radius: 3px; padding: 0.3rem 0.7rem; text-decoration: none; transition: all 0.2s; }
+  .doc-card-btn:hover { background: rgba(200,245,66,0.08); border-color: var(--accent); }
+  @media (max-width: 768px) { .doc-cards { grid-template-columns: 1fr; } }
+
+  /* GAME CARDS */
+  .game-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.2rem; }
+  .game-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; transition: border-color 0.2s, transform 0.2s; opacity: 0; transform: translateY(16px); transition: opacity 0.5s, transform 0.5s, border-color 0.2s; }
+  .game-card.visible { opacity: 1; transform: none; }
+  .game-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .game-card-img { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; border-bottom: 1px solid var(--border); background: var(--surface2); }
+  .game-card-body { padding: 1.2rem; }
+  .game-card-tag { font-family: var(--mono); font-size: 0.6rem; color: var(--accent); letter-spacing: 0.18em; margin-bottom: 0.4rem; }
+  .game-card-title { font-family: var(--display); font-weight: 600; font-size: 1rem; color: var(--text); margin-bottom: 0.3rem; }
+  .game-card-desc { font-size: 0.8rem; color: var(--muted); line-height: 1.5; margin-bottom: 0.9rem; }
+  .game-card-link { display: inline-flex; align-items: center; gap: 0.4rem; font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.1em; color: var(--accent); border: 1px solid rgba(200,245,66,0.3); border-radius: 3px; padding: 0.3rem 0.75rem; text-decoration: none; transition: all 0.2s; }
+  .game-card-link:hover { background: rgba(200,245,66,0.08); border-color: var(--accent); }
+  .game-card-badge { display: inline-block; font-family: var(--mono); font-size: 0.55rem; color: var(--accent2); letter-spacing: 0.15em; border: 1px solid var(--accent2); padding: 0.1rem 0.4rem; border-radius: 2px; margin-left: 0.5rem; vertical-align: middle; }
+
   /* ANIMATIONS */
   @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
   @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
@@ -459,6 +487,51 @@
         <span class="comp-tag" data-en="Game Economy" data-es="Economía de Juego" data-de="Spielwirtschaft">Game Economy</span>
         <span class="comp-tag" data-en="Progression Design" data-es="Diseño de Progresión" data-de="Progressionsdesign">Progression Design</span>
       </div>
+
+      <p class="doc-cards-label" data-en="// PROJECT SAMPLES" data-es="// MUESTRAS DE PROYECTO" data-de="// PROJEKTBEISPIELE">// PROJECT SAMPLES</p>
+      <div class="doc-cards">
+
+        <div class="doc-card">
+          <img class="doc-card-preview" src="docs/preview/one-pager-debut.png" alt="One Pager – DEBUT">
+          <div class="doc-card-body">
+            <p class="doc-card-type">ONE PAGER</p>
+            <p class="doc-card-title">DEBUT</p>
+            <p class="doc-card-sub" data-en="Tower Defense / Musical · PC · Mega Games" data-es="Tower Defense / Musical · PC · Mega Games" data-de="Tower Defense / Musical · PC · Mega Games">Tower Defense / Musical · PC · Mega Games</p>
+            <a class="doc-card-btn" href="docs/one-pager-debut.pdf" target="_blank">↗ <span data-en="View document" data-es="Ver documento" data-de="Dokument öffnen">View document</span></a>
+          </div>
+        </div>
+
+        <div class="doc-card">
+          <img class="doc-card-preview" src="docs/preview/ten-pager-purrfect-reroll.png" alt="Ten Pager – Purrfect Reroll">
+          <div class="doc-card-body">
+            <p class="doc-card-type">TEN PAGER</p>
+            <p class="doc-card-title">Purrfect Reroll</p>
+            <p class="doc-card-sub" data-en="Roguelite RPG · Pixel Art · Quantum Purrticles Games" data-es="Roguelite RPG · Pixel Art · Quantum Purrticles Games" data-de="Roguelite RPG · Pixel Art · Quantum Purrticles Games">Roguelite RPG · Pixel Art · Quantum Purrticles Games</p>
+            <a class="doc-card-btn" href="docs/ten-pager-purrfect-reroll.pdf" target="_blank">↗ <span data-en="View document" data-es="Ver documento" data-de="Dokument öffnen">Ver documento</span></a>
+          </div>
+        </div>
+
+        <div class="doc-card">
+          <img class="doc-card-preview" src="docs/preview/core-loop-tft.png" alt="Core Loop Analysis – TFT">
+          <div class="doc-card-body">
+            <p class="doc-card-type" data-en="CORE LOOP ANALYSIS" data-es="ANÁLISIS DE CORE LOOP" data-de="CORE LOOP ANALYSE">CORE LOOP ANALYSIS</p>
+            <p class="doc-card-title">Teamfight Tactics</p>
+            <p class="doc-card-sub" data-en="Repleyable & Compulsion Loop · Lovell Framework" data-es="Repleyable & Compulsion Loop · Marco de Lovell" data-de="Repleyable & Compulsion Loop · Lovell-Rahmen">Repleyable & Compulsion Loop · Lovell Framework</p>
+            <a class="doc-card-btn" href="docs/core-loop-tft.pdf" target="_blank">↗ <span data-en="View document" data-es="Ver documento" data-de="Dokument öffnen">View document</span></a>
+          </div>
+        </div>
+
+        <div class="doc-card">
+          <img class="doc-card-preview" src="docs/preview/gdd-claws-and-cue-balls.png" alt="GDD – Claws & Cue Balls">
+          <div class="doc-card-body">
+            <p class="doc-card-type">GDD <span style="font-family:var(--mono);font-size:0.55rem;color:var(--accent2);border:1px solid var(--accent2);padding:0.1rem 0.4rem;border-radius:2px;margin-left:0.3rem;">TFM</span></p>
+            <p class="doc-card-title">Claws &amp; Cue Balls</p>
+            <p class="doc-card-sub" data-en="Billiards Roguelite · Unreal Engine · Master's Final Project" data-es="Roguelite de Billar · Unreal Engine · Trabajo Final de Máster" data-de="Billard Roguelite · Unreal Engine · Masterarbeit">Billiards Roguelite · Unreal Engine · Master's Final Project</p>
+            <a class="doc-card-btn" href="https://app.notion.com/p/GAME-DESING-DOCUMENT-CLAWS-CUE-BALLS-2e38a8b95aec80d99140d4b7fba8274d" target="_blank">↗ <span data-en="View GDD" data-es="Ver GDD" data-de="GDD öffnen">View GDD</span></a>
+          </div>
+        </div>
+
+      </div>
     </div>
 
     <!-- ENGINES -->
@@ -485,6 +558,19 @@
         <span class="comp-tag tool">Trello</span>
         <span class="comp-tag" data-en="Feature Integration" data-es="Integración de Features" data-de="Feature-Integration">Feature Integration</span>
         <span class="comp-tag" data-en="Team Collaboration" data-es="Colaboración en Equipo" data-de="Teamzusammenarbeit">Team Collaboration</span>
+      </div>
+
+      <p class="doc-cards-label" data-en="// FEATURED PROJECT" data-es="// PROYECTO DESTACADO" data-de="// FEATURED PROJECT">// FEATURED PROJECT</p>
+      <div class="doc-cards" style="grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));">
+        <div class="doc-card">
+          <img class="doc-card-preview" src="docs/preview/goblin-td.png" alt="Goblin TD">
+          <div class="doc-card-body">
+            <p class="doc-card-type">UNITY · TOWER DEFENSE</p>
+            <p class="doc-card-title">Goblin TD</p>
+            <p class="doc-card-sub" data-en="Built with Unity using GitHub collaboration, Git LFS, and Trello for task management." data-es="Desarrollado en Unity con colaboración en GitHub, Git LFS y Trello para gestión de tareas." data-de="Mit Unity entwickelt, GitHub-Zusammenarbeit, Git LFS und Trello.">Built with Unity using GitHub collaboration, Git LFS, and Trello for task management.</p>
+            <a class="doc-card-btn" href="https://valelizu.itch.io/goblin-td" target="_blank">↗ <span data-en="Play on itch.io" data-es="Jugar en itch.io" data-de="Auf itch.io spielen">Play on itch.io</span></a>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -620,6 +706,7 @@
   <p class="section-label" data-en="07 // ACHIEVEMENTS" data-es="07 // LOGROS" data-de="07 // LEISTUNGEN">07 // ACHIEVEMENTS</p>
   <h2 class="section-title" data-en="Academic Participations" data-es="Participaciones Académicas" data-de="Akademische Teilnahmen">Academic Participations</h2>
   <div class="list-items">
+    <div class="list-item scroll-reveal"><span class="list-item-icon">[◈]</span><div><strong data-en="Guerrilla Game Festival 2026 — Indie Video Game Convention" data-es="Guerrilla Game Festival 2026 — Convención de Videojuegos Independientes" data-de="Guerrilla Game Festival 2026 — Indie-Videospielkonvention">Guerrilla Game Festival 2026 — Indie Video Game Convention</strong><span data-en="Showcasing the video game «Claws &amp; Cue Balls»" data-es="Presentación del videojuego «Claws &amp; Cue Balls»" data-de="Präsentation des Videospiels «Claws &amp; Cue Balls»">Showcasing the video game «Claws &amp; Cue Balls»</span></div></div>
     <div class="list-item scroll-reveal"><span class="list-item-icon">[◈]</span><div><strong data-en="KOSPIE – DAAD Exchange Program" data-es="Programa de Intercambio KOSPIE – DAAD" data-de="KOSPIE – DAAD Austauschprogramm">KOSPIE – DAAD Exchange Program</strong><span>2023 — 2024</span></div></div>
     <div class="list-item scroll-reveal"><span class="list-item-icon">[◈]</span><div><strong data-en="CANSAT 2023 — Iberoamerican Satellite Contest" data-es="CANSAT 2023 — Concurso Iberoamericano de Satélites" data-de="CANSAT 2023 — Iberoamerikanischer Satellitenwettbewerb">CANSAT 2023 — Iberoamerican Satellite Contest</strong><span data-en="21st place out of 82 teams" data-es="Lugar 21 de 82 equipos" data-de="21. Platz von 82 Teams">21st place out of 82 teams</span></div></div>
     <div class="list-item scroll-reveal"><span class="list-item-icon">[◈]</span><div><strong data-en="ROBOTEC 2022 — Line Tracker Contest" data-es="ROBOTEC 2022 — Concurso de Seguidor de Línea" data-de="ROBOTEC 2022 — Linienverfolgungswettbewerb">ROBOTEC 2022 — Line Tracker Contest</strong><span data-en="Participant" data-es="Participante" data-de="Teilnehmer">Participant</span></div></div>
@@ -629,9 +716,38 @@
 
 <div class="divider"></div>
 
+<!-- GAMES -->
+<section>
+  <p class="section-label" data-en="08 // GAMES" data-es="08 // JUEGOS" data-de="08 // SPIELE">08 // GAMES</p>
+  <h2 class="section-title" data-en="Published Games" data-es="Juegos Publicados" data-de="Veröffentlichte Spiele">Published Games</h2>
+  <div class="game-cards">
+
+    <div class="game-card scroll-reveal">
+      <img class="game-card-img" src="docs/preview/gdd-claws-and-cue-balls.png" alt="Claws & Cue Balls">
+      <div class="game-card-body">
+        <p class="game-card-tag">UNREAL ENGINE · TFM <span class="game-card-badge">TFM</span></p>
+        <p class="game-card-title">Claws &amp; Cue Balls</p>
+        <p class="game-card-desc" data-en="Billiards-meets-roguelite: control a cat navigating a pool table where every shot is a tactical decision. Master English system to control the cue ball and clear enemies before they overrun the table." data-es="Billar meets roguelite: controla un gato navegando una mesa de billar donde cada tiro es una decisión táctica. Domina el sistema inglés para controlar la bola blanca y elimina enemigos antes de que invadan la mesa." data-de="Billard trifft Roguelite: Steuere eine Katze auf einem Billardtisch, wo jeder Schuss eine taktische Entscheidung ist.">Billiards-meets-roguelite: control a cat navigating a pool table where every shot is a tactical decision. Master English system to control the cue ball and clear enemies before they overrun the table.</p>
+        <a class="game-card-link" href="https://valelizu.itch.io/claws-and-cue-balls" target="_blank">↗ <span data-en="Play on itch.io" data-es="Jugar en itch.io" data-de="Auf itch.io spielen">Play on itch.io</span></a>
+      </div>
+    </div>
+
+    <div class="game-card scroll-reveal">
+      <img class="game-card-img" src="docs/preview/goblin-td.png" alt="Goblin TD">
+      <div class="game-card-body">
+        <p class="game-card-tag">UNITY · TOWER DEFENSE</p>
+        <p class="game-card-title">Goblin TD</p>
+        <p class="game-card-desc" data-en="A tower defense game where you play as the goblins — place traps, command minions, and stop the relentless heroes from reaching your dungeon core." data-es="Un tower defense donde tú eres el goblin — coloca trampas, comanda esbirros y detén a los héroes que intentan llegar al núcleo de tu mazmorra." data-de="Ein Tower-Defense-Spiel, in dem du die Goblins spielst — lege Fallen, befehlige Schergen und halte die Helden auf.">A tower defense game where you play as the goblins — place traps, command minions, and stop the relentless heroes from reaching your dungeon core.</p>
+        <a class="game-card-link" href="https://valelizu.itch.io/goblin-td" target="_blank">↗ <span data-en="Play on itch.io" data-es="Jugar en itch.io" data-de="Auf itch.io spielen">Play on itch.io</span></a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
 <!-- LANGUAGES -->
 <section>
-  <p class="section-label" data-en="08 // LANGUAGES" data-es="08 // IDIOMAS" data-de="08 // SPRACHEN">08 // LANGUAGES</p>
+  <p class="section-label" data-en="09 // LANGUAGES" data-es="09 // IDIOMAS" data-de="09 // SPRACHEN">09 // LANGUAGES</p>
   <h2 class="section-title" data-en="Multilingual" data-es="Multilingüe" data-de="Mehrsprachig">Multilingual</h2>
   <div class="lang-grid">
     <div class="lang-card scroll-reveal"><p class="lang-name" data-en="Spanish" data-es="Español" data-de="Spanisch">Spanish</p><p class="lang-level" data-en="NATIVE" data-es="NATIVO" data-de="MUTTERSPRACHE">NATIVE</p></div>
@@ -644,7 +760,7 @@
 
 <!-- CONTACT -->
 <section>
-  <p class="section-label" data-en="09 // CONTACT" data-es="09 // CONTACTO" data-de="09 // KONTAKT">09 // CONTACT</p>
+  <p class="section-label" data-en="10 // CONTACT" data-es="10 // CONTACTO" data-de="10 // KONTAKT">10 // CONTACT</p>
   <h2 class="section-title" data-en="Get in Touch" data-es="Contáctame" data-de="Kontakt aufnehmen">Get in Touch</h2>
   <div class="contact-bar">
     <a href="mailto:axelcastor2000@hotmail.com" class="contact-item">
