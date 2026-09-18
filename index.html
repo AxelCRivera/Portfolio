@@ -184,6 +184,7 @@
   .doc-card-sub { font-size: 0.72rem; color: var(--muted); margin-bottom: 0.75rem; line-height: 1.4; }
   .doc-card-btn { display: inline-flex; align-items: center; gap: 0.4rem; font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.1em; color: var(--accent); border: 1px solid rgba(200,245,66,0.3); border-radius: 3px; padding: 0.3rem 0.7rem; text-decoration: none; transition: all 0.2s; }
   .doc-card-btn:hover { background: rgba(200,245,66,0.08); border-color: var(--accent); }
+  .doc-card-btns { display: flex; flex-wrap: wrap; gap: 0.4rem; }
   @media (max-width: 768px) { .doc-cards { grid-template-columns: 1fr; } }
 
   /* GAME CARDS */
@@ -524,7 +525,7 @@
         <div class="doc-card">
           <img class="doc-card-preview" src="docs/preview/gdd-claws-and-cue-balls.png" alt="GDD – Claws & Cue Balls">
           <div class="doc-card-body">
-            <p class="doc-card-type">GDD <span style="font-family:var(--mono);font-size:0.55rem;color:var(--accent2);border:1px solid var(--accent2);padding:0.1rem 0.4rem;border-radius:2px;margin-left:0.3rem;">TFM</span></p>
+            <p class="doc-card-type">GAME DESIGN DOCUMENT <span style="font-family:var(--mono);font-size:0.55rem;color:var(--accent2);border:1px solid var(--accent2);padding:0.1rem 0.4rem;border-radius:2px;margin-left:0.3rem;">TFM</span></p>
             <p class="doc-card-title">Claws &amp; Cue Balls</p>
             <p class="doc-card-sub" data-en="Billiards Roguelite · Unreal Engine · Master's Final Project" data-es="Roguelite de Billar · Unreal Engine · Trabajo Final de Máster" data-de="Billard Roguelite · Unreal Engine · Masterarbeit">Billiards Roguelite · Unreal Engine · Master's Final Project</p>
             <a class="doc-card-btn" href="https://app.notion.com/p/GAME-DESING-DOCUMENT-CLAWS-CUE-BALLS-2e38a8b95aec80d99140d4b7fba8274d" target="_blank">↗ <span data-en="View GDD" data-es="Ver GDD" data-de="GDD öffnen">View GDD</span></a>
@@ -569,6 +570,15 @@
             <p class="doc-card-title">Goblin TD</p>
             <p class="doc-card-sub" data-en="Built with Unity using GitHub collaboration, Git LFS, and Trello for task management." data-es="Desarrollado en Unity con colaboración en GitHub, Git LFS y Trello para gestión de tareas." data-de="Mit Unity entwickelt, GitHub-Zusammenarbeit, Git LFS und Trello.">Built with Unity using GitHub collaboration, Git LFS, and Trello for task management.</p>
             <a class="doc-card-btn" href="https://valelizu.itch.io/goblin-td" target="_blank">↗ <span data-en="Play on itch.io" data-es="Jugar en itch.io" data-de="Auf itch.io spielen">Play on itch.io</span></a>
+          </div>
+        </div>
+        <div class="doc-card">
+          <img class="doc-card-preview" src="docs/preview/2d-platformer.png" alt="2D Platformer Prototype">
+          <div class="doc-card-body">
+            <p class="doc-card-type">UNITY · 2D PLATFORMER</p>
+            <p class="doc-card-title" data-en="2D Platformer Prototype" data-es="Prototipo 2D Platformer" data-de="2D-Platformer-Prototyp">2D Platformer Prototype</p>
+            <p class="doc-card-sub" data-en="Prototype built in Unity exploring 2D platformer mechanics and feature integration." data-es="Prototipo desarrollado en Unity explorando mecánicas de plataformas 2D e integración de features." data-de="In Unity erstellter Prototyp zur Erkundung von 2D-Platformer-Mechaniken.">Prototype built in Unity exploring 2D platformer mechanics and feature integration.</p>
+            <a class="doc-card-btn" href="docs/prototipo-2d-platformer-doc.pdf" target="_blank">↗ <span data-en="View document" data-es="Ver documento" data-de="Dokument öffnen">View document</span></a>
           </div>
         </div>
       </div>
@@ -625,6 +635,53 @@
         <span class="comp-tag" data-en="Typography" data-es="Tipografía" data-de="Typografie">Typography</span>
         <span class="comp-tag" data-en="Audio UX" data-es="UX de Audio" data-de="Audio UX">Audio UX</span>
       </div>
+
+      <p class="doc-cards-label" data-en="// PROJECT SAMPLES" data-es="// MUESTRAS DE PROYECTO" data-de="// PROJEKTBEISPIELE">// PROJECT SAMPLES</p>
+      <div class="doc-cards">
+
+        <!-- Standards & Conventions Analysis — Word + PowerPoint -->
+        <div class="doc-card">
+          <img class="doc-card-preview" src="docs/preview/estandares-convenciones.png" alt="Estándares y Convenciones UX/UI">
+          <div class="doc-card-body">
+            <p class="doc-card-type" data-en="UX/UI ANALYSIS" data-es="ANÁLISIS UX/UI" data-de="UX/UI-ANALYSE">UX/UI ANALYSIS</p>
+            <p class="doc-card-title" data-en="Standards, Conventions & UX/UI Examples in Video Games" data-es="Análisis de Estándares, Convenciones y Ejemplos de UX/UI en Videojuegos" data-de="Standards, Konventionen & UX/UI-Beispiele in Videospielen">Standards, Conventions & UX/UI Examples in Video Games</p>
+            <p class="doc-card-sub" data-en="Two-part analysis: written report + presentation deck" data-es="Análisis en dos partes: informe escrito + presentación" data-de="Zweiteilige Analyse: schriftlicher Bericht + Präsentation">Two-part analysis: written report + presentation deck</p>
+            <div class="doc-card-btns">
+              <a class="doc-card-btn" href="docs/buscando-errores-de-diseño.docx" target="_blank">↗ <span data-en="Report (Word)" data-es="Informe (Word)" data-de="Bericht (Word)">Report (Word)</span></a>
+              <a class="doc-card-btn" href="docs/uxui.pptx" target="_blank">↗ <span data-en="Slides (PPT)" data-es="Presentación (PPT)" data-de="Folien (PPT)">Slides (PPT)</span></a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Puzzle Party UI — Video + Figma -->
+        <div class="doc-card">
+          <img class="doc-card-preview" src="docs/preview/puzzle-party-figma.png" alt="Puzzle Party UI">
+          <div class="doc-card-body">
+            <p class="doc-card-type">FIGMA · UI PROTOTYPE</p>
+            <p class="doc-card-title">Puzzle Party — UI Design</p>
+            <p class="doc-card-sub" data-en="Screen flow prototype and UI implementation for Puzzle Party. Includes Figma design and gameplay video." data-es="Prototipo de flujo de pantallas e implementación de UI para Puzzle Party. Incluye diseño en Figma y video de gameplay." data-de="Screen-Flow-Prototyp und UI-Implementierung für Puzzle Party. Beinhaltet Figma-Design und Gameplay-Video.">Screen flow prototype and UI implementation for Puzzle Party. Includes Figma design and gameplay video.</p>
+            <div class="doc-card-btns">
+              <a class="doc-card-btn" href="https://www.figma.com/design/YW3Xf9kCWxjk2Yh59z3nPF/PuzzleParty?node-id=20-874&t=XoYifAVfWuipMiQ6-0" target="_blank">↗ Figma</a>
+              <a class="doc-card-btn" href="docs/puzzle-party-ui.mp4" target="_blank">↗ <span data-en="Video" data-es="Video" data-de="Video">Video</span></a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Screen Flow doc + Figma -->
+        <div class="doc-card">
+          <img class="doc-card-preview" src="docs/preview/flujo-figma.png" alt="Screen Flow">
+          <div class="doc-card-body">
+            <p class="doc-card-type" data-en="SCREEN FLOW" data-es="FLUJO DE PANTALLAS" data-de="SCREEN FLOW">SCREEN FLOW</p>
+            <p class="doc-card-title">Puzzle Party — Screen Flow</p>
+            <p class="doc-card-sub" data-en="Full screen flow documentation and Figma prototype for Puzzle Party." data-es="Documentación completa de flujo de pantallas y prototipo Figma para Puzzle Party." data-de="Vollständige Screen-Flow-Dokumentation und Figma-Prototyp für Puzzle Party.">Full screen flow documentation and Figma prototype for Puzzle Party.</p>
+            <div class="doc-card-btns">
+              <a class="doc-card-btn" href="docs/flujo-doc.pdf" target="_blank">↗ <span data-en="View document" data-es="Ver documento" data-de="Dokument öffnen">View document</span></a>
+              <a class="doc-card-btn" href="https://www.figma.com/design/YW3Xf9kCWxjk2Yh59z3nPF/PuzzleParty?node-id=20-874&t=XoYifAVfWuipMiQ6-0" target="_blank">↗ Figma</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
     </div>
 
     <!-- F2P -->
@@ -678,6 +735,7 @@
         <span class="comp-tag">NavMesh AI</span>
         <span class="comp-tag" data-en="Combo Systems" data-es="Sistemas de Combos" data-de="Combo-Systeme">Combo Systems</span>
         <span class="comp-tag" data-en="Rapid Prototyping" data-es="Prototipado Rápido" data-de="Rapid Prototyping">Rapid Prototyping</span>
+        <span class="comp-tag" data-en="QA Session Design" data-es="Diseño de Sesiones de QA" data-de="QA-Session-Design">QA Session Design</span>
       </div>
     </div>
 
@@ -737,7 +795,7 @@
       <div class="game-card-body">
         <p class="game-card-tag">UNITY · TOWER DEFENSE</p>
         <p class="game-card-title">Goblin TD</p>
-        <p class="game-card-desc" data-en="A tower defense game where you play as the goblins — place traps, command minions, and stop the relentless heroes from reaching your dungeon core." data-es="Un tower defense donde tú eres el goblin — coloca trampas, comanda esbirros y detén a los héroes que intentan llegar al núcleo de tu mazmorra." data-de="Ein Tower-Defense-Spiel, in dem du die Goblins spielst — lege Fallen, befehlige Schergen und halte die Helden auf.">A tower defense game where you play as the goblins — place traps, command minions, and stop the relentless heroes from reaching your dungeon core.</p>
+        <p class="game-card-desc" data-en="Goblin TD is a tower defense game where goblins are your most valuable resource. Assign them to gather resources, build structures, and operate defenses as you prepare for each enemy wave. Balance your economy, expand your population, unlock upgrades, and decide how to use your limited workforce to survive increasingly dangerous attacks." data-es="Goblin TD es un tower defense donde los goblins son tu recurso más valioso. Asígnalos para recolectar recursos, construir estructuras y operar defensas mientras te preparas para cada oleada. Equilibra tu economía, expande tu población, desbloquea mejoras y decide cómo usar tu limitada fuerza de trabajo para sobrevivir ataques cada vez más peligrosos." data-de="Goblin TD ist ein Tower-Defense-Spiel, in dem Goblins deine wertvollste Ressource sind. Weise sie zu, um Ressourcen zu sammeln, Strukturen zu bauen und Verteidigungen zu bedienen, während du dich auf jede Welle vorbereitest.">Goblin TD is a tower defense game where goblins are your most valuable resource. Assign them to gather resources, build structures, and operate defenses as you prepare for each enemy wave. Balance your economy, expand your population, unlock upgrades, and decide how to use your limited workforce to survive increasingly dangerous attacks.</p>
         <a class="game-card-link" href="https://valelizu.itch.io/goblin-td" target="_blank">↗ <span data-en="Play on itch.io" data-es="Jugar en itch.io" data-de="Auf itch.io spielen">Play on itch.io</span></a>
       </div>
     </div>
